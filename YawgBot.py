@@ -7,7 +7,7 @@ import discord
 # Initialize
 # ---------------------------
 Y = discord.Client()
-Y.login('EMAIL', 'PASSWORD')
+Y.login('yawgmothtestbot@gmail.com', 'Yawgmoth\'sWill')
 
 @Y.event
 def on_ready():
@@ -51,8 +51,8 @@ def on_message(message):
    # -----------------------
    if message.content.startswith('+'):
 
-      query = str(message.content[1:]).encode('utf-8') # input cleansing     
-      
+      query = message.content[1:].encode('utf-8') # input cleansing     
+      #query = query.encode('ascii')
 
       # this sort of helps debug the string encoding issue
       #
@@ -60,7 +60,8 @@ def on_message(message):
       #time.sleep(3)
       #print io.communicate()
 
-      card = subprocess.check_output(["mtg", query]).encode('utf-8') 
+      proc = subprocess.Popen(['mtg', query], stdout=subprocess.PIPE)
+      card = proc.communicate()[0]
       print card
 
       if len(card) < 1000:
