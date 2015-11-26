@@ -7,7 +7,7 @@ import discord
 # Initialize
 # ---------------------------
 Y = discord.Client()
-Y.login('yawgmothtestbot@gmail.com', 'Yawgmoth\'sWill')
+Y.login('EMAIL', 'PAWW')
 
 @Y.event
 def on_ready():
