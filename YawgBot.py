@@ -49,8 +49,13 @@ def on_message(message):
             Y.send_message(message.channel, 'I obey, Chancellor ShakeAndShimmy.')
         else:
             Y.send_message(message.channel, 'I will not obey, mortal.')
+    
+    #!shit
+    #command mentions the person that used it
     if message.content.startswith('!shit'):
 	    Y.send_message(message.channel, 'Happy {}?'.format(message.author.mention()))
+    #!fuck
+    #uses a global variable counter to count the number of fucks
     if message.content.startswith('!fuck'):
 	   fucksGiven = fucksGiven + 1
 	   Y.send_message(message.channel, 'Fuck given')
