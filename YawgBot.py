@@ -1,8 +1,11 @@
 import subprocess
+import re
 #import codecs
 import discord
 #import time
 import sys
+
+fucksGiven = 0
 
 # ---------------------------
 # Initialize
@@ -10,7 +13,6 @@ import sys
 
 
 Y = discord.Client()
-fucksGiven = 0
 Y.login(sys.argv[1], sys.argv[2])
 
 @Y.event
@@ -35,6 +37,19 @@ def on_ready():
 @Y.event
 def on_message(message):
     global fucksGiven
+    fullMessage = message.content
+    splitMessage = re.findall(("<([^<>]*)>"), message.content)
+    for cardName in splitMessage:
+	    cardName = cardName.encode('utf-8')
+	    proc = subprocess.Popen(['mtg',cardName], stdout=subprocess.PIPE)
+	    card = proc.communicate()[0]
+	    print card
+
+	    if len(card) < 1000:
+		    Y.send_message(message.channel, card)
+	    else:
+		    Y.send_message(message.channel, "too long")
+
     # -----------------------
    # !obey
    # -----------------------
@@ -53,6 +68,7 @@ def on_message(message):
     #!shit
     #command mentions the person that used it
     if message.content.startswith('!shit'):
+	    print message.author.mention()
 	    Y.send_message(message.channel, 'Happy {}?'.format(message.author.mention()))
     #!fuck
     #uses a global variable counter to count the number of fucks
