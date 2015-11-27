@@ -10,7 +10,7 @@ import sys
 
 
 Y = discord.Client()
-
+fucksGiven = 0
 Y.login(sys.argv[1], sys.argv[2])
 
 @Y.event
@@ -34,6 +34,7 @@ def on_ready():
 # ---------------------------
 @Y.event
 def on_message(message):
+    global fucksGiven
     # -----------------------
    # !obey
    # -----------------------
@@ -48,7 +49,12 @@ def on_message(message):
             Y.send_message(message.channel, 'I obey, Chancellor ShakeAndShimmy.')
         else:
             Y.send_message(message.channel, 'I will not obey, mortal.')
-
+    if message.content.startswith('!shit'):
+	    Y.send_message(message.channel, 'Happy {}?'.format(message.author.mention()))
+    if message.content.startswith('!fuck'):
+	   fucksGiven = fucksGiven + 1
+	   Y.send_message(message.channel, 'Fuck given')
+	   Y.send_message(message.channel, 'Number of fucks given: ' + str(fucksGiven))
    # -----------------------
    # +card
    # -----------------------
@@ -67,7 +73,7 @@ def on_message(message):
         print card
 
         if len(card) < 1000:
-            Y.send_message(message.channel, card.format(message.author.mention()))
+            Y.send_message(message.channel, card)
         else:
             Y.send_message(
 			    message.channel, "The incantations are too long; read them yourself.")
