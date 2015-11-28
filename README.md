@@ -1,3 +1,15 @@
-# yawgmoth
+# Yawgmoth
 Discord chat bot for r/competitiveEDH
-make sure to set PYTHONIOENCODING=utf-8 in env var
+
+## Prerequisites
+```
+$ sudo pip2 install mtg
+$ sudo pip2 install discord.py
+$ export PYTHONIOENCODING=utf-8
+```
+
+## Execution
+```
+$ python2 YawgBot.py [username] [password]
+```
+
