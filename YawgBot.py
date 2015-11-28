@@ -38,8 +38,9 @@ def on_ready():
 def on_message(message):
     global fucksGiven
     fullMessage = message.content
-    splitMessage = re.findall(("<([^<>]*)>"), message.content)
+    splitMessage = re.findall(("<<([^<>]*)>>"), message.content)
     for cardName in splitMessage:
+	    print cardName
 	    cardName = cardName.encode('utf-8')
 	    proc = subprocess.Popen(['mtg',cardName], stdout=subprocess.PIPE)
 	    card = proc.communicate()[0]
