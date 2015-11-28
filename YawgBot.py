@@ -5,12 +5,9 @@ import sys
 import json
 import banlists
 
-#fucksGiven = 0
-
 # ---------------------------
-# Initialize
+# Initialization
 # ---------------------------
-
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
 
@@ -35,7 +32,6 @@ def on_ready():
 # ---------------------------
 @Y.event
 def on_message(message):
-    #global fucksGiven
     content = message.content.encode('utf-8')
     queries = re.findall(("<<([^<>]*)>>"), content)
     divider = '-' * 30
@@ -58,8 +54,6 @@ def on_message(message):
         if len(cards) > 8:
             Y.send_message(message.channel, "The incantations are too long; read them yourself.")
             break
-
-        #print cards
 
         for card in cards:
 
@@ -91,37 +85,36 @@ def on_message(message):
     # -----------------------
     # !obey
     # -----------------------
+    obey_dict = {
+            'Shaper': 'I obey, Master Shaper.',
+            'ace': 'I obey, Admiral Ace.',
+            'muCephei': 'I obey, muCephei.',
+            'Gerst': 'I obey, Captain Gerst.',
+            'Lerker': 'I obey, Great Lerker.',
+            'ShakeAndShimmy': 'I obey, Chancellor ShakeAndShimmy.',
+            'angelforge': 'I obey, Lord AngelForge.',
+            'JimWolfie': 'Suck my necrotic dick, Jim.',
+            'Skuloth': 'Zur is for scrubs, I refuse to obey.'
+    }
+            
     if message.content.startswith('!obey'):
-        if message.author.name.startswith('Shaper'):
-            Y.send_message(message.channel, 'I obey, master Shaper.')
-        elif message.author.name.startswith('ace'):
-            Y.send_message(message.channel, 'I obey, Admiral ace.')
-        elif message.author.name.startswith('JimWolfie'):
-            Y.send_message(message.channel, 'Suck my necrotic dick, Jim.')
-        elif message.author.name.startswith('muCephei'):
-            Y.send_message(message.channel, 'I obey, mu.')
-        elif message.author.name.startswith('Gerst'):
-            Y.send_message(message.channel, 'I obey, Captain Gerst.')
-        elif message.author.name.startswith('Lerker'):
-            Y.send_message(message.channel, 'I obey, great Lerker.')
-        elif message.author.name.startswith('ShakeAndShimmy'):
-            Y.send_message(message.channel, 'I obey, Chancellor ShakeAndShimmy.')
+        if message.author.name in obey_dict.keys():
+            Y.send_message(message.channel, obey_dict[message.author.name])
         else:
             Y.send_message(message.channel, 'I will not obey, mortal.')
     
+    # -----------------------
+    # !*ban
+    # -----------------------
     if message.content.startswith('!standardban'):
         Y.send_message(message.channel, banlists.standard_ban)
-
-    if message.content.startswith('!modernban'):
+    elif message.content.startswith('!modernban'):
         Y.send_message(message.channel, banlists.modern_ban)
-
-    if message.content.startswith('!legacyban'):
+    elif message.content.startswith('!legacyban'):
         Y.send_message(message.channel, banlists.legacy_ban)
-
-    if message.content.startswith('!vintageban'):
+    elif message.content.startswith('!vintageban'):
         Y.send_message(message.channel, banlists.vintage_ban)
-
-    if message.content.startswith('!edhban'):
+    elif message.content.startswith('!edhban'):
         Y.send_message(message.channel, banlists.edh_ban)
 
 Y.run()
