@@ -1,15 +1,16 @@
 # Yawgmoth
-Discord chat bot for r/competitiveEDH
 
-## Prerequisites
+Yawgmoth is a Discord chat bot for r/competitiveEDH.
+
+To install Yawgmoth's dependencies, use:
+
 ```
-$ sudo pip2 install mtg
-$ sudo pip2 install discord.py
-$ export PYTHONIOENCODING=utf-8
+$ sudo ./setup.sh
 ```
 
-## Execution
+To run Yawgmoth, use:
+
 ```
-$ python2 YawgBot.py [username] [password]
+$ ./start.sh [username] [password]
 ```
 
