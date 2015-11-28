@@ -117,4 +117,11 @@ def on_message(message):
     elif message.content.startswith('!edhban'):
         Y.send_message(message.channel, banlists.edh_ban)
 
+    # -----------------------
+    # !version
+    # -----------------------
+    if message.content.startswith('!version'):
+        Y.send_message(message.channel, 'v0.1')
+
+
 Y.run()
