@@ -35,6 +35,7 @@ def on_message(message):
     content = message.content.encode('utf-8')
     queries = re.findall(("<<([^<>]*)>>"), content)
     divider = '-' * 30
+    print content
 
     # -----------------------
     # <card>
@@ -73,7 +74,7 @@ def on_message(message):
                     response += st.encode('utf-8') + ' '
 
             if 'power' in card:
-                response += '[' + card['power'].encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
+                response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
             response += '\n'
 
             if 'rules_text' in card:
