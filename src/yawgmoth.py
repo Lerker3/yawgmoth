@@ -89,12 +89,13 @@ def on_message(message):
             'Shaper': 'I obey, Master Shaper.',
             'ace': 'I obey, Admiral Ace.',
             'muCephei': 'I obey, muCephei.',
-            'Gerst': 'I obey, Captain Gerst.',
+            'Gerst': 'I obey, Artificer Gerst.',
             'Lerker': 'I obey, Great Lerker.',
             'ShakeAndShimmy': 'I obey, Chancellor ShakeAndShimmy.',
             'angelforge': 'I obey, Lord AngelForge.',
             'JimWolfie': 'Suck my necrotic dick, Jim.',
-            'Skuloth': 'Zur is for scrubs, I refuse to obey.'
+            'Skuloth': 'Zur is for scrubs, I refuse to obey.',
+            'Noon2Dusk': 'I obey, Inventor Noon.'
     }
             
     if message.content.startswith('!obey'):
