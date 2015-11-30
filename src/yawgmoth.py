@@ -56,32 +56,16 @@ def on_message(message):
             Y.send_message(message.channel, "The incantations are too long; read them yourself.")
             break
 
+        exact=0
+
         for card in cards:
+            if (card['name'].encode('utf-8').lower() == query.lower()):
+                exact=1
+                printCard(message, card)
 
-            response = '**' + card['name'].encode('utf-8') + '**'
-
-            if 'mana_cost' in card:
-                response += ' (' + card['mana_cost'].encode('utf-8') + ')'
-            response += '\n'
-
-            if 'types' in card:
-                for t in card['types']:
-                    response += t.encode('utf-8') + ' '
-
-            if 'subtypes' in card:
-                response += "-- "
-                for st in card['subtypes']:
-                    response += st.encode('utf-8') + ' '
-
-            if 'power' in card:
-                response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
-            response += '\n'
-
-            if 'rules_text' in card:
-                for r in card['rules_text'].encode('utf-8').split(';'):
-                    response += r.strip() + '\n'
-
-            Y.send_message(message.channel, response)
+        if (exact == 0):
+            for card in cards:
+                printCard(message, card)
 
     # -----------------------
     # !obey
@@ -123,6 +107,36 @@ def on_message(message):
     # -----------------------
     if message.content.startswith('!version'):
         Y.send_message(message.channel, 'v0.1')
+
+# ---------------------------
+# print card function
+# ---------------------------
+def printCard(message, card):
+    global Y
+    response = '**' + card['name'].encode('utf-8') + '**'
+
+    if 'mana_cost' in card:
+        response += ' (' + card['mana_cost'].encode('utf-8') + ')'
+    response += '\n'
+
+    if 'types' in card:
+        for t in card['types']:
+            response += t.encode('utf-8') + ' '
+
+    if 'subtypes' in card:
+        response += "-- "
+        for st in card['subtypes']:
+            response += st.encode('utf-8') + ' '
+
+    if 'power' in card:
+        response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
+    response += '\n'
+
+    if 'rules_text' in card:
+        for r in card['rules_text'].encode('utf-8').split(';'):
+            response += r.strip() + '\n'
+
+    Y.send_message(message.channel, response)
 
 
 Y.run()
