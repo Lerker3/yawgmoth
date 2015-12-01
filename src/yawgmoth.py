@@ -10,6 +10,7 @@ import banlists
 # ---------------------------
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
+VERSION_NUMBER = 'v0.2'
 
 @Y.event
 def on_ready():
@@ -48,24 +49,31 @@ def on_message(message):
 
         cards = json.loads(result)
 
+        #If no cards are found, we are done
         if len(cards) == 0:
             Y.send_message(message.channel, "The ritual summoned nothing but ash...")
-            break
+            continue
 
-        if len(cards) > 8:
-            Y.send_message(message.channel, "The incantations are too long; read them yourself.")
-            break
-
-        exact=0
-
+        #If an exact card is found, just print that one
+        #When you find the exact match, break out of the for card in cards loop
+        #Then "continue" the for s in queries to move to the next query
+        done="false"
         for card in cards:
             if (card['name'].encode('utf-8').lower() == query.lower()):
-                exact=1
                 printCard(message, card)
+                done="true"
+                break
+        if (done=="true"):
+            continue
 
-        if (exact == 0):
-            for card in cards:
-                printCard(message, card)
+        #If more than 8 cards are found, don't spam chat
+        if len(cards) > 8:
+            Y.send_message(message.channel, "The incantations are too long; read them yourself.")
+            continue
+
+        #Finally, if we've gotten to here, print all the cards
+        for card in cards:
+            printCard(message, card)
 
     # -----------------------
     # !obey
@@ -107,7 +115,7 @@ def on_message(message):
     # !version
     # -----------------------
     if message.content.startswith('!version'):
-        Y.send_message(message.channel, 'v0.1')
+        Y.send_message(message.channel, VERSION_NUMBER)
 
 # ---------------------------
 # print card function
