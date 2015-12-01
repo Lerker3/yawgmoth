@@ -10,7 +10,7 @@ import banlists
 # ---------------------------
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
-VERSION_NUMBER = 'v0.2'
+VERSION_NUMBER = 'v0.3'
 
 @Y.event
 def on_ready():
