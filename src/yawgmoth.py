@@ -57,13 +57,13 @@ def on_message(message):
         #If an exact card is found, just print that one
         #When you find the exact match, break out of the for card in cards loop
         #Then "continue" the for s in queries to move to the next query
-        done="false"
+        done=False
         for card in cards:
             if (card['name'].encode('utf-8').lower() == query.lower()):
                 printCard(message, card)
-                done="true"
+                done=True
                 break
-        if (done=="true"):
+        if (done):
             continue
 
         #If more than 8 cards are found, don't spam chat
@@ -72,8 +72,16 @@ def on_message(message):
             continue
 
         #Finally, if we've gotten to here, print all the cards
+        notFirstOne=False
         for card in cards:
+            if (notFirstOne):
+                Y.send_message(message.channel, divider)
+            else:
+                notFirstOne=True
             printCard(message, card)
+
+            
+
 
     # -----------------------
     # !obey
