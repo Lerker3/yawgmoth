@@ -51,7 +51,8 @@ def on_message(message):
 
         #If no cards are found, we are done
         if len(cards) == 0:
-            Y.send_message(message.channel, "The ritual summoned nothing but ash...")
+            resp="**"+query+"**: *The ritual summoned nothing but ash...*"
+            Y.send_message(message.channel, resp)
             continue
 
         #If an exact card is found, just print that one
