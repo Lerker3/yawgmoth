@@ -15,7 +15,7 @@ last_card = None
 # ---------------------------
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
-VERSION_NUMBER = 'v0.3'
+VERSION_NUMBER = 'v0.4'
 
 @Y.event
 def on_ready():
@@ -88,9 +88,6 @@ def on_message(message):
                 notFirstOne=True
             printCard(message, card)
 
-            
-
-
     # -----------------------
     # !obey
     # -----------------------
@@ -132,6 +129,14 @@ def on_message(message):
     # -----------------------
     if message.content.startswith('!version'):
         Y.send_message(message.channel, VERSION_NUMBER)
+
+    # -----------------------
+    # !reset
+    # -----------------------
+    reset_users = ['Gerst','ace','Lerker','Shaper']
+    if message.content.startswith('!reset') and message.author.name in reset_users:
+        Y.send_message(message.channel, 'Await my return in terror, mortal.')
+        sys.exit(2)
 
 # ---------------------------
 # print card function
