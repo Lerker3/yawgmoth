@@ -15,7 +15,7 @@ last_card = None
 # ---------------------------
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
-VERSION_NUMBER = 'v0.4'
+VERSION_NUMBER = 'v0.5'
 
 @Y.event
 def on_ready():
@@ -220,6 +220,7 @@ def printDetails(message, card):
 # ---------------------------
 def printRulings(message, card):
     global Y
+    print(card)
     response = '**' + card['name'].encode('utf-8') + '**'
     response += '\n'
 
