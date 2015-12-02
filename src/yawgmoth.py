@@ -81,9 +81,6 @@ def on_message(message):
                 notFirstOne=True
             printCard(message, card)
 
-            
-
-
     # -----------------------
     # !obey
     # -----------------------
@@ -125,6 +122,14 @@ def on_message(message):
     # -----------------------
     if message.content.startswith('!version'):
         Y.send_message(message.channel, VERSION_NUMBER)
+
+    # -----------------------
+    # !reset
+    # -----------------------
+    reset_users = ['Gerst','ace','Lerker','Shaper']
+    if message.content.startswith('!reset') and message.author.name in reset_users:
+        Y.send_message(message.channel, 'Await my return in terror, mortal.')
+        sys.exit(2)
 
 # ---------------------------
 # print card function
