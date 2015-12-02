@@ -35,7 +35,6 @@ def on_ready():
 def on_message(message):
     content = message.content.encode('utf-8')
     queries = re.findall(("<<([^<>]*)>>"), content)
-    divider = '-' * 30
     print content
 
     # -----------------------
