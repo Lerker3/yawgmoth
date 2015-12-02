@@ -73,12 +73,7 @@ def on_message(message):
             continue
 
         #Finally, if we've gotten to here, print all the cards
-        notFirstOne=False
         for card in cards:
-            if (notFirstOne):
-                Y.send_message(message.channel, divider)
-            else:
-                notFirstOne=True
             printCard(message, card)
 
     # -----------------------
