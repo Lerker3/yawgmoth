@@ -6,6 +6,11 @@ import json
 import banlists
 
 # ---------------------------
+# Globals
+# ---------------------------
+last_card = None
+
+# ---------------------------
 # Initialization
 # ---------------------------
 Y = discord.Client()
@@ -33,6 +38,7 @@ def on_ready():
 # ---------------------------
 @Y.event
 def on_message(message):
+    global last_card
     content = message.content.encode('utf-8')
     queries = re.findall(("<<([^<>]*)>>"), content)
     divider = '-' * 30
@@ -62,6 +68,7 @@ def on_message(message):
         for card in cards:
             if (card['name'].encode('utf-8').lower() == query.lower()):
                 printCard(message, card)
+                last_card = card
                 done=True
                 break
         if (done):
