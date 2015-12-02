@@ -48,12 +48,16 @@ def on_message(message):
     # <card>
     # -----------------------
     for s in queries:
-
         query = s.encode('utf-8')
         proc = subprocess.Popen(['mtg', query, '--json'], stdout=subprocess.PIPE)
         result = str(proc.communicate()[0])
 
         cards = json.loads(result)
+
+        #Store the card if it's the only one
+        last_card = None
+        if len(queries) == 1 and len(cards) == 1:
+            last_card = cards[0]
 
         #If no cards are found, we are done
         if len(cards) == 0:
@@ -68,7 +72,6 @@ def on_message(message):
         for card in cards:
             if (card['name'].encode('utf-8').lower() == query.lower()):
                 printCard(message, card)
-                last_card = card
                 done=True
                 break
         if (done):
@@ -87,6 +90,15 @@ def on_message(message):
             else:
                 notFirstOne=True
             printCard(message, card)
+
+    # -----------------------
+    # !details
+    # -----------------------
+    if message.content.startswith('!details'):
+        if last_card is not None:
+            Y.send_message(message.channel, last_card['name'])
+        else:
+            Y.send_message(message.channel, 'You must divine a single entity first.')
 
     # -----------------------
     # !obey
