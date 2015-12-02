@@ -72,6 +72,7 @@ def on_message(message):
         for card in cards:
             if (card['name'].encode('utf-8').lower() == query.lower()):
                 printCard(message, card)
+                last_card = card
                 done=True
                 break
         if (done):
@@ -231,3 +232,4 @@ def printRulings(message, card):
 
 
 Y.run()
+
