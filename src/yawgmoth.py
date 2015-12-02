@@ -96,7 +96,16 @@ def on_message(message):
     # -----------------------
     if message.content.startswith('!details'):
         if last_card is not None:
-            Y.send_message(message.channel, last_card['name'])
+            printDetails(message, last_card)
+        else:
+            Y.send_message(message.channel, 'You must divine a single entity first.')
+
+    # -----------------------
+    # !rulings
+    # -----------------------
+    if message.content.startswith('!rulings'):
+        if last_card is not None:
+            printRulings(message, last_card)
         else:
             Y.send_message(message.channel, 'You must divine a single entity first.')
 
@@ -177,6 +186,46 @@ def printCard(message, card):
     if 'rules_text' in card:
         for r in card['rules_text'].encode('utf-8').split(';'):
             response += r.strip() + '\n'
+
+    Y.send_message(message.channel, response)
+
+# ---------------------------
+# print details function
+# ---------------------------
+def printDetails(message, card):
+    global Y
+    response = '**' + card['name'].encode('utf-8') + '**'
+    response += '\n'
+
+    if 'artist' in card:
+        response += 'Artist: ' + card['artist'].encode('utf-8')
+    response += '\n'
+
+    if 'community_rating' in card:
+        response += 'Community Rating: ' + card['community_rating'].encode('utf-8')
+    response += '\n'
+
+    if 'printings' in card:
+        response += 'Printings: '
+        response += '\n'
+        for printing in card['printings']:
+            response += '- ' + printing[0].encode('utf-8') + ' (' + printing[1].encode('utf-8') + ')'
+            response += '\n'
+
+    Y.send_message(message.channel, response)
+
+# ---------------------------
+# print rulings function
+# ---------------------------
+def printRulings(message, card):
+    global Y
+    response = '**' + card['name'].encode('utf-8') + '**'
+    response += '\n'
+
+    if 'ruling_data' in card:
+        for ruling in card['ruling_data']:
+            response += '- ' + ruling[1].encode('utf-8') + ' (' + ruling[0].encode('utf-8') + ')'
+            response += '\n'
 
     Y.send_message(message.channel, response)
 
