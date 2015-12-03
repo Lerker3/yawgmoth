@@ -88,7 +88,8 @@ def on_message(message):
             'angelforge': 'I obey, Lord AngelForge.',
             'JimWolfie': 'Suck my necrotic dick, Jim.',
             'Skuloth': 'Zur is for scrubs, I refuse to obey.',
-            'Noon2Dusk': 'I obey, Inventor Noon.'
+            'Noon2Dusk': 'I obey, Inventor Noon.',
+            'razzliox': 'I obey, Razzberries.'
     }
             
     if message.content.startswith('!obey'):
