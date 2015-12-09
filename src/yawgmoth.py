@@ -6,11 +6,16 @@ import json
 import banlists
 
 # ---------------------------
+# Globals
+# ---------------------------
+last_card = None
+
+# ---------------------------
 # Initialization
 # ---------------------------
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
-VERSION_NUMBER = 'v0.4'
+VERSION_NUMBER = 'v0.5'
 
 @Y.event
 def on_ready():
@@ -33,6 +38,7 @@ def on_ready():
 # ---------------------------
 @Y.event
 def on_message(message):
+    global last_card
     content = message.content.encode('utf-8')
     queries = re.findall(("<<([^<>]*)>>"), content)
     print content
@@ -41,12 +47,16 @@ def on_message(message):
     # <card>
     # -----------------------
     for s in queries:
-
         query = s.encode('utf-8')
         proc = subprocess.Popen(['mtg', query, '--json'], stdout=subprocess.PIPE)
         result = str(proc.communicate()[0])
 
         cards = json.loads(result)
+
+        #Store the card if it's the only one
+        last_card = None
+        if len(queries) == 1 and len(cards) == 1:
+            last_card = cards[0]
 
         #If no cards are found, we are done
         if len(cards) == 0:
@@ -61,6 +71,7 @@ def on_message(message):
         for card in cards:
             if (card['name'].encode('utf-8').lower() == query.lower()):
                 printCard(message, card)
+                last_card = card
                 done=True
                 break
         if (done):
@@ -74,6 +85,24 @@ def on_message(message):
         #Finally, if we've gotten to here, print all the cards
         for card in cards:
             printCard(message, card)
+
+    # -----------------------
+    # !details
+    # -----------------------
+    if message.content.startswith('!details'):
+        if last_card is not None:
+            printDetails(message, last_card)
+        else:
+            Y.send_message(message.channel, 'You must divine a single entity first.')
+
+    # -----------------------
+    # !rulings
+    # -----------------------
+    if message.content.startswith('!rulings'):
+        if last_card is not None:
+            printRulings(message, last_card)
+        else:
+            Y.send_message(message.channel, 'You must divine a single entity first.')
 
     # -----------------------
     # !obey
@@ -157,5 +186,47 @@ def printCard(message, card):
 
     Y.send_message(message.channel, response)
 
+# ---------------------------
+# print details function
+# ---------------------------
+def printDetails(message, card):
+    global Y
+    response = '**' + card['name'].encode('utf-8') + '**'
+    response += '\n'
+
+    if 'artist' in card:
+        response += 'Artist: ' + card['artist'].encode('utf-8')
+    response += '\n'
+
+    if 'community_rating' in card:
+        response += 'Community Rating: ' + card['community_rating'].encode('utf-8')
+    response += '\n'
+
+    if 'printings' in card:
+        response += 'Printings: '
+        response += '\n'
+        for printing in card['printings']:
+            response += '- ' + printing[0].encode('utf-8') + ' (' + printing[1].encode('utf-8') + ')'
+            response += '\n'
+
+    Y.send_message(message.channel, response)
+
+# ---------------------------
+# print rulings function
+# ---------------------------
+def printRulings(message, card):
+    global Y
+    print(card)
+    response = '**' + card['name'].encode('utf-8') + '**'
+    response += '\n'
+
+    if 'ruling_data' in card:
+        for ruling in card['ruling_data']:
+            response += '- ' + ruling[1].encode('utf-8') + ' (' + ruling[0].encode('utf-8') + ')'
+            response += '\n'
+
+    Y.send_message(message.channel, response)
+
 
 Y.run()
+
