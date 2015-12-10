@@ -161,6 +161,7 @@ def on_message(message):
 # ---------------------------
 def printCard(message, card):
     global Y
+    print(card)
     response = '**' + card['name'].encode('utf-8') + '**'
 
     if 'mana_cost' in card:
@@ -178,7 +179,11 @@ def printCard(message, card):
 
     if 'power' in card:
         response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
-    response += '\n'
+        response += '\n'
+
+    if 'loyalty' in card:
+        response += '[' + card['loyalty'].encode('utf-8') + ']'
+        response += '\n'
 
     if 'rules_text' in card:
         for r in card['rules_text'].encode('utf-8').split(';'):
@@ -216,7 +221,6 @@ def printDetails(message, card):
 # ---------------------------
 def printRulings(message, card):
     global Y
-    print(card)
     response = '**' + card['name'].encode('utf-8') + '**'
     response += '\n'
 
