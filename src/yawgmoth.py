@@ -15,7 +15,7 @@ last_card = None
 # ---------------------------
 Y = discord.Client()
 Y.login(sys.argv[1], sys.argv[2])
-VERSION_NUMBER = 'v0.5'
+VERSION_NUMBER = 'v0.6'
 
 @Y.event
 def on_ready():
