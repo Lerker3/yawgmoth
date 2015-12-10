@@ -179,11 +179,10 @@ def printCard(message, card):
 
     if 'power' in card:
         response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
-        response += '\n'
 
     if 'loyalty' in card:
         response += '[' + card['loyalty'].encode('utf-8') + ']'
-        response += '\n'
+    response += '\n'
 
     if 'rules_text' in card:
         for r in card['rules_text'].encode('utf-8').split(';'):
