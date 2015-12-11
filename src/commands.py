@@ -27,7 +27,7 @@ obey_dict = {
         'Noon2Dusk': 'I obey, Inventor Noon.',
         'razzliox': 'I obey, Razzberries.',
         'ifarmpandas': 'Beep boop, pandas are the best.',
-        'K-Ni-Fe': 'I obey, because I\'m 40\% Potassium, Nickel and Iron.'
+        'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.'
 }
 
 # ---------------------------
