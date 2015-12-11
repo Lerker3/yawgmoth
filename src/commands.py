@@ -19,7 +19,7 @@ obey_dict = {
         'ace': 'I obey, Admiral Ace.',
         'muCephei': 'I obey, muCephei.',
         'Gerst': 'I obey, Artificer Gerst.',
-        'Lerker': 'I obey, Commador 64 Lerker.',
+        'Lerker': 'I obey, Commodore 64 Lerker.',
         'ShakeAndShimmy': 'I obey, Chancellor ShakeAndShimmy.',
         'angelforge': 'I obey, Lord AngelForge.',
         'JimWolfie': 'Suck my necrotic dick, Jim.',
@@ -27,7 +27,7 @@ obey_dict = {
         'Noon2Dusk': 'I obey, Inventor Noon.',
         'razzliox': 'I obey, Razzberries.',
         'ifarmpandas': 'Beep boop, pandas are the best.',
-        'K-Ni-Fe': 'I\'m 40% Potassium, Nickel and Iron.'
+        'K-Ni-Fe': 'I obey, because I\'m 40\% Potassium, Nickel and Iron.'
 }
 
 # ---------------------------
@@ -67,10 +67,10 @@ def cmd_fetch(message):
             if (card['name'].encode('utf-8').lower() == query.lower()):
                 response += cards.get_card(message, card)
                 if len(queries) == 1:
-                    newProc = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
-                    newRes = str(newProc.communicate()[0])
-                    newlist = json.loads(newRes)
-                    last_card = newlist[0]
+                    newProcess = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
+                    newResult = str(newProcess.communicate()[0])
+                    newList = json.loads(newResult)
+                    last_card = newList[0]
                 done = True
                 break
         if done:
