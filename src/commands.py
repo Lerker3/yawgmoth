@@ -96,7 +96,7 @@ def cmd_rulings(message):
     if last_card is not None:
         return cards.get_card_rulings(message, last_card)
     else:
-        Y.send_message(message.channel, 'You must divine a single entity first.')
+        return 'You must divine a single entity first.'
 
 # ---------------------------
 # Command: Standard Banlist
