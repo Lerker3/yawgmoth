@@ -19,7 +19,8 @@ def get_card(message, card):
         for st in card['subtypes']:
             response += st.encode('utf-8') + ' '
     if 'power' in card:
-        response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/' + card['toughness'].encode('utf-8') + ']'
+        response += '[' + re.sub('\*','\\\*',card['power']).encode('utf-8') + '/'
+        response += re.sub('\*','\\\*',card['toughness']).encode('utf-8') + ']'
     if 'loyalty' in card:
         response += '[' + card['loyalty'].encode('utf-8') + ']'
     response += '\n'
