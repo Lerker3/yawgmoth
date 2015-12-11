@@ -47,8 +47,9 @@ def cmd_fetch(message):
 
         # Store the card if it's the only one
         last_card = None
-        if len(queries) == 1 and len(card_list) == 1:
-            last_card = card_list[0]
+        if len(card_list) == 1:
+            if len(queries) == 1:
+                last_card = card_list[0]
             response += cards.get_card(message, card_list[0])
             continue
 
@@ -65,12 +66,27 @@ def cmd_fetch(message):
         done = False
         for card in card_list:
             if (card['name'].encode('utf-8').lower() == query.lower()):
-                response += cards.get_card(message, card)
-                if len(queries) == 1:
-                    newProcess = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
-                    newResult = str(newProcess.communicate()[0])
-                    newList = json.loads(newResult)
-                    last_card = newList[0]
+                if len(card_list) == 2:
+                    if 'a' in card['card_number']:
+                        if len(queries) == 1:
+                            last_card = card_list[0]
+                        response += cards.get_card(message, card_list[0])
+                        response += cards.get_card(message, card_list[1])
+                    elif 'b' in card['card_number']:
+                        if len(queries) == 1:
+                            last_card = card_list[1]
+                        response += cards.get_card(message, card_list[0])
+                        response += cards.get_card(message, card_list[1])
+                    else:
+                        response += cards.get_card(message, card)
+                else:
+                    response += cards.get_card(message, card)
+                    if len(queries) == 1:
+                        newProcess = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
+                        newResult = str(newProcess.communicate()[0])
+                        newList = json.loads(newResult)
+                        if len(newList) > 0:
+                            last_card = newList[0]
                 done = True
                 break
         if done:
@@ -163,5 +179,6 @@ def cmd_reset(message):
         sys.exit(2)
     else:
         return ''
+
 
 
