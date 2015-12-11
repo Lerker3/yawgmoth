@@ -33,7 +33,7 @@ def get_card(message, card):
 # Get Card Details
 # ---------------------------
 def get_card_details(message, card):
-    response = '**' + card['name'].encode('utf-8') + '**\n'
+    response = '**' + card['name'].encode('utf-8') + ' (Details)**\n'
     if 'artist' in card:
         response += 'Artist: ' + card['artist'].encode('utf-8')
     response += '\n'
@@ -52,7 +52,7 @@ def get_card_details(message, card):
 # Get Card Rulings
 # ---------------------------
 def get_card_rulings(message, card):
-    response = '**' + card['name'].encode('utf-8') + '**\n'
+    response = '**' + card['name'].encode('utf-8') + ' (Rulings)**\n'
     if 'ruling_data' in card:
         for ruling in card['ruling_data']:
             response += '- ' + ruling[1].encode('utf-8') + ' (' + ruling[0].encode('utf-8') + ')'
