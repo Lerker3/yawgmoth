@@ -11,7 +11,7 @@ import banlists
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.7'
+version_number = 'v0.8'
 last_card = None
 reset_users = ['Gerst','ace','Lerker','Shaper']
 obey_dict = {
@@ -19,14 +19,15 @@ obey_dict = {
         'ace': 'I obey, Admiral Ace.',
         'muCephei': 'I obey, muCephei.',
         'Gerst': 'I obey, Artificer Gerst.',
-        'Lerker': 'I obey, Great Lerker.',
+        'Lerker': 'I obey, Commodore 64 Lerker.',
         'ShakeAndShimmy': 'I obey, Chancellor ShakeAndShimmy.',
         'angelforge': 'I obey, Lord AngelForge.',
         'JimWolfie': 'Suck my necrotic dick, Jim.',
         'Skuloth': 'Zur is for scrubs, I refuse to obey.',
         'Noon2Dusk': 'I obey, Inventor Noon.',
         'razzliox': 'I obey, Razzberries.',
-        'ifarmpandas': 'Beep boop, pandas are the best.'
+        'ifarmpandas': 'Beep boop, pandas are the best.',
+        'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.'
 }
 
 # ---------------------------
@@ -46,8 +47,11 @@ def cmd_fetch(message):
 
         # Store the card if it's the only one
         last_card = None
-        if len(queries) == 1 and len(card_list) == 1:
-            last_card = card_list[0]
+        if len(card_list) == 1:
+            if len(queries) == 1:
+                last_card = card_list[0]
+            response += cards.get_card(message, card_list[0])
+            continue
 
         # If no cards are found, we are done
         if len(card_list) == 0:
@@ -57,11 +61,32 @@ def cmd_fetch(message):
         # If an exact card is found, just print that one
         # When you find the exact match, break out of the for card in cards loop
         # Then "continue" the for s in queries to move to the next query
+        # If you find an exact match and there is only 1 query in the buffer, 
+        # Get the details and rulings of the exact card, as they are skipped when mtg cli returns multiple
         done = False
         for card in card_list:
             if (card['name'].encode('utf-8').lower() == query.lower()):
-                response += cards.get_card(message, card)
-                last_card = card
+                if len(card_list) == 2:
+                    if 'a' in card['card_number']:
+                        if len(queries) == 1:
+                            last_card = card_list[0]
+                        response += cards.get_card(message, card_list[0])
+                        response += cards.get_card(message, card_list[1])
+                    elif 'b' in card['card_number']:
+                        if len(queries) == 1:
+                            last_card = card_list[1]
+                        response += cards.get_card(message, card_list[0])
+                        response += cards.get_card(message, card_list[1])
+                    else:
+                        response += cards.get_card(message, card)
+                else:
+                    response += cards.get_card(message, card)
+                    if len(queries) == 1:
+                        newProcess = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
+                        newResult = str(newProcess.communicate()[0])
+                        newList = json.loads(newResult)
+                        if len(newList) > 0:
+                            last_card = newList[0]
                 done = True
                 break
         if done:
@@ -154,4 +179,6 @@ def cmd_reset(message):
         sys.exit(2)
     else:
         return ''
+
+
 
