@@ -11,7 +11,7 @@ import banlists
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.8'
+version_number = 'v0.9'
 last_card = None
 reset_users = ['Gerst','ace','Lerker','Shaper']
 obey_dict = {
