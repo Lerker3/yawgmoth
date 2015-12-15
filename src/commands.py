@@ -69,17 +69,18 @@ def cmd_fetch(message):
             if (card['name'].encode('utf-8').lower() == query.lower()):     # If name matches query
                 DFC=False                                                   # Assume it's not a DFC
                 if len(card_list) == 2:                                     # If exactly 2 cards are found
-                    DFC=True                                                #   Assume it is a DFC
-                    if 'a' in card['card_number']:                          # Get the correct side of the DFC
-                        if len(queries) == 1:
-                            last_card = card_list[0]
-                        response += cards.get_card(message, card_list[0])
-                        response += cards.get_card(message, card_list[1])
-                    elif 'b' in card['card_number']:
-                        if len(queries) == 1:
-                            last_card = card_list[1]
-                        response += cards.get_card(message, card_list[0])
-                        response += cards.get_card(message, card_list[1])
+                    if 'card_number' in card:                               # If the Card HAS a card number
+                        DFC=True                                            #   It must be a DFC
+                        if 'a' in card['card_number']:                      #   Get the correct side of the DFC
+                            if len(queries) == 1:
+                                last_card = card_list[0]
+                            response += cards.get_card(message, card_list[0])
+                            response += cards.get_card(message, card_list[1])
+                        elif 'b' in card['card_number']:
+                            if len(queries) == 1:
+                                last_card = card_list[1]
+                            response += cards.get_card(message, card_list[0])
+                            response += cards.get_card(message, card_list[1])
                     else:                                                   # If it turns out to NOT be a DFC
                         DFC=False                                           #   Send it through the normal logic
                 if not DFC:
@@ -182,6 +183,7 @@ def cmd_reset(message):
         sys.exit(2)
     else:
         return ''
+
 
 
 
