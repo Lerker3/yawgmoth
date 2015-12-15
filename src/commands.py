@@ -66,9 +66,11 @@ def cmd_fetch(message):
         # Get the details and rulings of the exact card, as they are skipped when mtg cli returns multiple
         done = False
         for card in card_list:
-            if (card['name'].encode('utf-8').lower() == query.lower()):
-                if len(card_list) == 2:
-                    if 'a' in card['card_number']:
+            if (card['name'].encode('utf-8').lower() == query.lower()):     # If name matches query
+                DFC=False                                                   # Assume it's not a DFC
+                if len(card_list) == 2:                                     # If exactly 2 cards are found
+                    DFC=True                                                #   Assume it is a DFC
+                    if 'a' in card['card_number']:                          # Get the correct side of the DFC
                         if len(queries) == 1:
                             last_card = card_list[0]
                         response += cards.get_card(message, card_list[0])
@@ -78,11 +80,11 @@ def cmd_fetch(message):
                             last_card = card_list[1]
                         response += cards.get_card(message, card_list[0])
                         response += cards.get_card(message, card_list[1])
-                    else:
-                        response += cards.get_card(message, card)
-                else:
+                    else:                                                   # If it turns out to NOT be a DFC
+                        DFC=False                                           #   Send it through the normal logic
+                if not DFC:
                     response += cards.get_card(message, card)
-                    if len(queries) == 1:
+                    if len(queries) == 1:                                   # Send a new query with --exact
                         newProcess = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
                         newResult = str(newProcess.communicate()[0])
                         newList = json.loads(newResult)
@@ -180,6 +182,7 @@ def cmd_reset(message):
         sys.exit(2)
     else:
         return ''
+
 
 
 
