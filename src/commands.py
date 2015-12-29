@@ -13,7 +13,7 @@ import banlists
 # ---------------------------
 version_number = 'v0.9.1'
 last_card = None
-reset_users = ['Gerst','ace','Lerker','Shaper']
+reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
 obey_dict = {
         'Shaper': 'I obey, Master Shaper.',
         'aceuuuu': 'I obey, Admiral Aceuuuu~!',
