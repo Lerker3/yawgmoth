@@ -16,7 +16,7 @@ last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
 obey_dict = {
         'Shaper': 'I obey, Master Shaper.',
-        'aceuuuu': 'I obey, Admiral Aceuuuu~!',
+        'ayce': 'I obey, Admiral Aceuuu~!',
         'muCephei': 'I obey, muCephei.',
         'Gerst': 'I obey, Artificer Gerst.',
         'Lerker': 'I obey, Commodore 64 Lerker.',
@@ -27,8 +27,9 @@ obey_dict = {
         'Noon2Dusk': 'I obey, Inventor Noon.',
         'razzliox': 'I obey, Razzberries.',
         'ifarmpandas': 'Beep boop, pandas are the best.',
-		'Rien': 'I obey, kiddo ;)',
-        'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.'
+	'Rien': 'I obey, kiddo.',
+        'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
+        'BigLupu': 'Make up your mind already!'
 }
 
 # ---------------------------
