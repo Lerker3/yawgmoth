@@ -11,7 +11,7 @@ import banlists
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.9.1'
+version_number = 'v0.9.2'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
 obey_dict = {
@@ -29,7 +29,7 @@ obey_dict = {
         'ifarmpandas': 'Beep boop, pandas are the best.',
 	'Rien': 'I obey, kiddo.',
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
-        'BigLupu': 'Make up your mind already!'
+        'BigLupu': 'Rim my necrotic yawghole, Lupu.'
 }
 
 # ---------------------------
