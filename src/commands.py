@@ -8,15 +8,20 @@ import sys
 import cards
 import banlists
 
+import requests
+from requests.auth import HTTPDigestAuth
+import json
+from datetime import datetime
+
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.9.2'
+version_number = 'v0.10.0'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
 obey_dict = {
         'Shaper': 'I obey, Master Shaper.',
-        'ayce': 'I obey, Admiral Aceuuu~!',
+        'aceuuu': 'I obey, Admiral Aceuuu~!',
         'muCephei': 'I obey, muCephei.',
         'Gerst': 'I obey, Artificer Gerst.',
         'Lerker': 'I obey, Commodore 64 Lerker.',
@@ -27,7 +32,7 @@ obey_dict = {
         'Noon2Dusk': 'I obey, Inventor Noon.',
         'razzliox': 'I obey, Razzberries.',
         'ifarmpandas': 'Beep boop, pandas are the best.',
-	'Rien': 'I obey, kiddo.',
+        'Rien': 'I obey, kiddo.',
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
         'BigLupu': 'Rim my necrotic yawghole, Lupu.'
 }
@@ -167,6 +172,53 @@ def cmd_obey(message):
         return obey_dict[message.author.name]
     else:
         return 'I will not obey, mortal.'
+
+# ---------------------------
+# Command: Moon
+# ---------------------------
+def cmd_moon(message):
+    try: 
+        now = datetime.now().strftime('%m/%d/%Y')
+        url = "http://api.usno.navy.mil/rstt/oneday?date=" + now + "&loc=Boston,%20MA"
+        response = requests.get(url)
+        phase = ""
+        rawPhase = ""
+
+        if(response.ok):
+            moonData = json.loads(response.content)
+            
+            if "curphase" in moonData:
+                rawPhase = moonData["curphase"]
+            elif "closestphase" in moonData and "phase" in moonData["closestphase"]:
+                rawPhase = moonData["closestphase"]["phase"]
+
+            if rawPhase == "Full Moon": 
+                phase = ":full_moon:"
+            elif rawPhase == "Waning Gibbous":
+                phase = ":waning_gibbous_moon:"
+            elif rawPhase == "Last Quarter":
+                phase = ":last_quarter_moon:"
+            elif rawPhase == "Waning Crescent":
+                phase = ":waning_crescent_moon:"
+            elif rawPhase == "New Moon":
+                phase = ":new_moon:"
+            elif rawPhase == "Waxing Crescent":
+                phase = ":waxing_crescent_moon:"
+            elif rawPhase == "First Quarter":
+                phase = ":first_quarter_moon:"
+            elif rawPhase == "Waxing Gibbous":
+                phase = ":waxing_gibbous_moon:"
+            else:
+                phase = "Cannot be divined."
+
+        else:
+            phase = "Cannot be divined."
+
+        return phase
+
+    except:
+        return "Cannot be divined."
+
 
 # ---------------------------
 # Command: Version
