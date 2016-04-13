@@ -178,10 +178,10 @@ def cmd_obey(message):
 # ---------------------------
 def cmd_moon(message):
     try: 
+        phase = "Cannot be divined."
         now = datetime.now().strftime('%m/%d/%Y')
         url = "http://api.usno.navy.mil/rstt/oneday?date=" + now + "&loc=Boston,%20MA"
         response = requests.get(url)
-        phase = ""
         rawPhase = ""
 
         if(response.ok):
@@ -218,6 +218,8 @@ def cmd_moon(message):
 
     except:
         return "Cannot be divined."
+
+    return phase
 
 
 # ---------------------------
