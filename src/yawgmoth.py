@@ -45,6 +45,8 @@ def on_message(message):
         response += commands.cmd_edhban(message)
     if message.content.startswith('!obey'):
         response += commands.cmd_obey(message)
+    if message.content.startswith('!moon'):
+        response += commands.cmd_moon(message)
     if message.content.startswith('!version'):
         response += commands.cmd_version(message)
     if message.content.startswith('!reset'):
