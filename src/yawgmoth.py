@@ -51,6 +51,8 @@ def on_message(message):
         response += ':sun_with_face:'
     if message.content.startswith('!version'):
         response += commands.cmd_version(message)
+    if message.content.startswith('!rules'):
+        response += 'http://media.wizards.com/2016/docs/MagicCompRules_04082016.pdf'
     if message.content.startswith('!reset'):
         response += commands.cmd_reset(message)
     yawgmoth.send_message(message.channel, response)
