@@ -34,7 +34,8 @@ obey_dict = {
         'ifarmpandas': 'Beep boop, pandas are the best.',
         'Rien': 'I obey, kiddo.',
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
-        'BigLupu': 'Rim my necrotic yawghole, Lupu.'
+        'BigLupu': 'Rim my necrotic yawghole, Lupu.',
+        'PGleo86': 'shh bby is ok'
 }
 
 # ---------------------------
