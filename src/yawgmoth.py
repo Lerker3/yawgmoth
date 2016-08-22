@@ -29,6 +29,7 @@ def on_ready():
 @yawgmoth.event
 def on_message(message):
     response = commands.cmd_fetch(message)
+    message = message.lower()
     if message.content.startswith('!details'):
         response += commands.cmd_details(message)
     if message.content.startswith('!rulings'):
@@ -61,4 +62,3 @@ def on_message(message):
 # Startup
 # ---------------------------
 yawgmoth.run()
-
