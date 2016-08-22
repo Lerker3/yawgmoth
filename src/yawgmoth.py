@@ -49,6 +49,8 @@ def on_message(message):
         response += commands.cmd_moon(message)
     if message.content.startswith('!sun'):
         response += ':sun_with_face:'
+    if message.content.startswith('!git'):
+        response += commands.cmd_git(message)
     if message.content.startswith('!version'):
         response += commands.cmd_version(message)
     if message.content.startswith('!rules'):

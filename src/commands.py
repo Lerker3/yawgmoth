@@ -17,6 +17,7 @@ from datetime import datetime
 # Globals
 # ---------------------------
 version_number = 'v0.10.0'
+git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
 obey_dict = {
@@ -35,7 +36,8 @@ obey_dict = {
         'Rien': 'I obey, kiddo.',
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
         'BigLupu': 'Rim my necrotic yawghole, Lupu.',
-        'PGleo86': 'shh bby is ok'
+        'PGleo86': 'shh bby is ok',
+        'tenrose': 'Saber is best girl'
 }
 
 # ---------------------------
@@ -222,6 +224,12 @@ def cmd_moon(message):
 
     return phase
 
+# ---------------------------
+# Command: git
+# ---------------------------
+def cmd_git(message):
+    global git_repo
+    return 'You can find my source at: ' + git_repo
 
 # ---------------------------
 # Command: Version
