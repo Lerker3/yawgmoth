@@ -37,7 +37,8 @@ obey_dict = {
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
         'BigLupu': 'Rim my necrotic yawghole, Lupu.',
         'PGleo86': 'shh bby is ok',
-        'tenrose': 'I will obey when you get a life, you filthy fucking weeb'
+        'tenrose': 'I will obey when you get a life, you filthy fucking weeb',
+        'captainriku': 'I obey, Jund Lord Riku'
 }
 
 # ---------------------------
