@@ -53,6 +53,10 @@ def on_message(message):
         response += commands.cmd_git(message)
     if message.content.startswith('!version'):
         response += commands.cmd_version(message)
+    if message.content.startswith('!blush'):
+        response += ':yawgblush:'
+    if message.content.startswith('!sheep'):
+        response += ':sheep:'
     if message.content.startswith('!rules'):
         response += 'http://media.wizards.com/2016/docs/MagicCompRules_04082016.pdf'
     if message.content.startswith('!reset'):

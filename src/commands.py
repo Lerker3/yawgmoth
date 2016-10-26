@@ -16,7 +16,7 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.10.1'
+version_number = 'v0.10.2'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
@@ -66,7 +66,7 @@ def cmd_fetch(message):
 
         # If no cards are found, we are done
         if len(card_list) == 0:
-            response += '**' + query + '**: *The ritual summoned nothing but ash...*'
+            response += ':yawgblush: **' + query + '**: *The ritual summoned nothing but ash...*'
             continue
 
         # If an exact card is found, just print that one
