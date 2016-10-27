@@ -310,7 +310,7 @@ def cmd_clearmute(message):
 # Command: Ping Me
 # ---------------------------
 def cmd_ping(message):
-    return '@' + message.author.name + '#' + message.author.discriminator
+    return message.author.mention
 
 
 
