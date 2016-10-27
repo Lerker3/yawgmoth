@@ -20,6 +20,8 @@ version_number = 'v0.10.2'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
+mute_admins = ['Lerker','Shaper']
+muted_users = []
 obey_dict = {
         'Shaper': 'I obey, Master Shaper.',
         'aceuuu': 'I obey, Admiral Aceuuu~!',
@@ -249,7 +251,24 @@ def cmd_reset(message):
     else:
         return ''
 
-
+# ---------------------------
+# Command: Mute
+# ---------------------------
+def cmd_mute(message):
+	global mute_admins
+	global muted_users
+	if message.author.name in mute_admins:
+		MUTEname =  message.content.encode('utf-8')[6:]
+		if MUTEname in mute_admins:
+			return "You can't mute an admin"
+		if MUTEname in muted_users:
+			muted_users.remove(MUTEname)
+			return MUTEname + 'has been unmuted'
+		else:
+			muted_users.append(MUTEname)
+			return MUTEname + 'has been muted'
+	else:
+		return "Can't let you *do* that, StarFox"
 
 
 
