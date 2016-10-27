@@ -54,7 +54,7 @@ def on_message(message):
     if message.content.startswith('!version'):
         response += commands.cmd_version(message)
     if message.content.startswith('!blush'):
-        response += ':yawgblush:'
+        response += ' :yawgblush: '
     if message.content.startswith('!sheep'):
         response += ':sheep:'
     if message.content.startswith('!rules'):
