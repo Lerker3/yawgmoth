@@ -248,8 +248,12 @@ def cmd_reset(message):
         sys.exit(2)
     else:
         return ''
-
-
+		
+# ---------------------------
+# Command: Ping Me
+# ---------------------------
+def cmd_ping(message):
+	return '@' + message.author.name
 
 
 

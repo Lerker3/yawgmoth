@@ -57,11 +57,13 @@ def on_message(message):
         response += ':yawgblush:'
     if message.content.startswith('!sheep'):
         response += ':sheep:'
+	if message.content.startswith('!pingme'):
+        response += commands.cmd_ping(message)
     if message.content.startswith('!rules'):
         response += 'http://media.wizards.com/2016/docs/MagicCompRules_04082016.pdf'
     if message.content.startswith('!reset'):
         response += commands.cmd_reset(message)
-    yawgmoth.send_message(message.channel, response)
+	yawgmoth.send_message(message.channel, response)
 
 # ---------------------------
 # Startup
