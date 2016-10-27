@@ -253,7 +253,7 @@ def cmd_reset(message):
 # Command: Ping Me
 # ---------------------------
 def cmd_ping(message):
-	return '@' + message.author.name
+    return '@' + message.author.name
 
 
 
