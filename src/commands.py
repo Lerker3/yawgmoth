@@ -38,7 +38,8 @@ obey_dict = {
         'BigLupu': 'Rim my necrotic yawghole, Lupu.',
         'PGleo86': 'shh bby is ok',
         'tenrose': 'I will obey when you get a life, you filthy fucking weeb',
-        'captainriku': 'I obey, Jund Lord Riku'
+        'captainriku': 'I obey, Jund Lord Riku',
+		'Mori': ':sheep:'
 }
 
 # ---------------------------
@@ -66,7 +67,7 @@ def cmd_fetch(message):
 
         # If no cards are found, we are done
         if len(card_list) == 0:
-            response += ':yawgblush: **' + query + '**: *The ritual summoned nothing but ash...*'
+            response += '\n**' + query + '**: *The ritual summoned nothing but ash...*\n'
             continue
 
         # If an exact card is found, just print that one
@@ -113,7 +114,7 @@ def cmd_fetch(message):
 
         # Finally, if we've gotten to here, print all the cards
         for card in card_list:
-            response += cards.get_card(message, card)
+            response += '\n' + cards.get_card(message, card) + '\n'
 
     return response
 
