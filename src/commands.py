@@ -270,6 +270,12 @@ def cmd_mute(message):
             return MUTEname + " has been muted"
     else:
         return "Can't let you *do* that, StarFox"
+		
+# ---------------------------
+# Command: Ping Me
+# ---------------------------
+def cmd_ping(message):
+    return '@' + message.author.name
 
 
 
