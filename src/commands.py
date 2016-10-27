@@ -16,7 +16,7 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.10.2'
+version_number = 'v0.10.3'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
@@ -38,7 +38,8 @@ obey_dict = {
         'BigLupu': 'Rim my necrotic yawghole, Lupu.',
         'PGleo86': 'shh bby is ok',
         'tenrose': 'I will obey when you get a life, you filthy fucking weeb',
-        'captainriku': 'I obey, Jund Lord Riku'
+        'captainriku': 'I obey, Jund Lord Riku',
+        'Mori': ':sheep:'
 }
 
 # ---------------------------
@@ -61,12 +62,12 @@ def cmd_fetch(message):
         if len(card_list) == 1:
             if len(queries) == 1:
                 last_card = card_list[0]
-            response += cards.get_card(message, card_list[0])
+            response += '\n' + cards.get_card(message, card_list[0]) + '\n'
             continue
 
         # If no cards are found, we are done
         if len(card_list) == 0:
-            response += ':yawgblush: **' + query + '**: *The ritual summoned nothing but ash...*'
+            response += '\n**' + query + '**: *The ritual summoned nothing but ash...*\n'
             continue
 
         # If an exact card is found, just print that one
@@ -108,12 +109,12 @@ def cmd_fetch(message):
 
         # If more than 8 cards are found, don't spam chat
         if len(card_list) > 8:
-            response += 'The incantations are too long; read them yourself'
+            response += '\nThe incantations are too long; read them yourself\n'
             continue
 
         # Finally, if we've gotten to here, print all the cards
         for card in card_list:
-            response += cards.get_card(message, card)
+            response += '\n' + cards.get_card(message, card) + '\n'
 
     return response
 
