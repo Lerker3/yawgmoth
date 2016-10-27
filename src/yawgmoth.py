@@ -54,11 +54,15 @@ def on_message(message):
     if message.content.startswith('!version'):
         response += commands.cmd_version(message)
     if message.content.startswith('!blush'):
-        response += ' :yawgblush: '
+        response += ':yawgblush:'
     if message.content.startswith('!sheep'):
         response += ':sheep:'
     if message.content.startswith('!mute'):
         response += commands.cmd_mute(message)
+    if message.content.startswith('!admin'):
+        response += commands.cmd_addadmin(message)
+    if message.content.startswith('!clearmute'):
+        response += commands.cmd_clearmute(message)
     if message.content.startswith('!pingme'):
         response += commands.cmd_ping(message)
     if message.content.startswith('!rules'):

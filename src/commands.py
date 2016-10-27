@@ -16,11 +16,11 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.10.3'
+version_number = 'v0.10.4'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
-reset_users = ['Gerst','aceuuuu','Lerker','Shaper']
-mute_admins = ['Lerker','Shaper']
+reset_users = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
+mute_admins = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
 muted_users = []
 obey_dict = {
         'Shaper': 'I obey, Master Shaper.',
@@ -38,10 +38,11 @@ obey_dict = {
         'Rien': 'I obey, kiddo.',
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
         'BigLupu': 'Rim my necrotic yawghole, Lupu.',
-        'PGleo86': 'shh bby is ok',
-        'tenrose': 'I will obey when you get a life, you filthy fucking weeb',
-        'captainriku': 'I obey, Jund Lord Riku',
-        'Mori': ':sheep:'
+        'PGleo86': 'shh bby is ok.',
+        'tenrose': 'I will obey when you get a life, you filthy fucking weeb.',
+        'captainriku': 'I obey, Jund Lord Riku.',
+        'Mori': ':sheep: baaa',
+        'infiniteimoc': 'I obey, Imoc, Herald of the Sun.'
 }
 
 # ---------------------------
@@ -250,7 +251,7 @@ def cmd_reset(message):
     if message.author.name in reset_users:
         sys.exit(2)
     else:
-        return ''
+        return "Can't let you do that, StarFox"
 
 # ---------------------------
 # Command: Mute
@@ -269,13 +270,47 @@ def cmd_mute(message):
             muted_users.append(MUTEname)
             return MUTEname + " has been muted"
     else:
-        return "Can't let you *do* that, StarFox"
+        return "Can't let you do that, StarFox"
 		
+# ---------------------------
+# Command: Add Mute Admin
+# ---------------------------
+def cmd_addadmin(message):
+    global mute_admins
+    global reset_users
+    global muted_users
+    if message.author.name in reset_users:
+        newAdmin = message.content.encode('utf-8')[7:]
+        if newAdmin in muted_users:
+            return "You can't make a muted user an admin"
+        if newAdmin in reset_users:
+            return "You can't change the admin status of an owner"
+        if newAdmin in mute_admins:
+            mute_admins.remove(newAdmin)
+            return newAdmin + " can no longer mute others"
+        else:
+            mute_admins.append(newAdmin)
+            return newAdmin + " can now mute others"
+    else:
+        return "Can't let you do that, StarFox"
+        
+# ---------------------------
+# Command: Clear Mute List
+# ---------------------------
+def cmd_clearmute(message):
+    global mute_admins
+    global muted_users
+    if message.author.name in mute_admins:
+        muted_users = []
+        return "All muted users have been unmuted"
+    else:
+        return "Can't let you do that, StarFox"
+        		
 # ---------------------------
 # Command: Ping Me
 # ---------------------------
 def cmd_ping(message):
-    return '@' + message.author.name
+    return '@' + message.author.name + '#' + message.author.discriminator
 
 
 
