@@ -16,7 +16,7 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.10.4'
+version_number = 'v0.10.5'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
@@ -310,7 +310,7 @@ def cmd_clearmute(message):
 # Command: Ping Me
 # ---------------------------
 def cmd_ping(message):
-    return message.author.mention
+    return 'Pinging {0.author.mention}'.format(message)
 
 
 
