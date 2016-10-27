@@ -263,10 +263,10 @@ def cmd_mute(message):
             return "You can't mute an admin"
         if MUTEname in muted_users:
             muted_users.remove(MUTEname)
-            return MUTEname + 'has been unmuted'
+            return MUTEname + " has been unmuted"
         else:
             muted_users.append(MUTEname)
-            return MUTEname + 'has been muted'
+            return MUTEname + " has been muted"
     else:
         return "Can't let you *do* that, StarFox"
 
