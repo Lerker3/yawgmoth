@@ -71,6 +71,7 @@ def on_message(message):
         response += commands.cmd_reset(message)
     if message.content.startswith('!image'):
         response += commands.cmd_image(message)
+
     if message.author.name not in commands.muted_users:
         yawgmoth.send_message(message.channel, response)
 
