@@ -39,7 +39,7 @@ obey_dict = {
         'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
         'BigLupu': 'Rim my necrotic yawghole, Lupu.',
         'PGleo86': 'shh bby is ok.',
-        'tenrose': 'I won\'t obey, but that\'s not because you\'re a bad person. I just like to be free, as you do. You have a great day :)',
+        'tenrose': 'I won\'t obey, but that\'s not because you\'re a bad person. I just like to be free, as do you. You have a great day :)',
         'captainriku': 'I obey, Jund Lord Riku.',
         'Mori': ':sheep: baaa',
         'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
