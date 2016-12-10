@@ -42,7 +42,8 @@ obey_dict = {
         'tenrose': 'I will obey when you get a life, you filthy fucking weeb.',
         'captainriku': 'I obey, Jund Lord Riku.',
         'Mori': ':sheep: baaa',
-        'infiniteimoc': 'I obey, Imoc, Herald of the Sun.'
+        'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
+        'neosloth': 'Long days and pleasant nights, neosloth.'
 }
 
 # ---------------------------
@@ -312,5 +313,14 @@ def cmd_clearmute(message):
 def cmd_ping(message):
     return 'Pinging {0.author.mention}'.format(message)
 
-
-
+# ---------------------------
+# Command: Card Image
+# ---------------------------
+def cmd_image(message):
+    global last_card
+    if last_card is not None:
+        name = last_card['name'].encode('utf-8')
+        url = 'http://gatherer.wizards.com/Handlers/Image.ashx?name={0}&type=card'
+        return url.format(name).replace(' ', '+')
+    else:
+        return 'You must divine a single entity first.'
