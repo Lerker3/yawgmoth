@@ -44,8 +44,7 @@ obey_dict = {
         'Mori': ':sheep: baaa',
         'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
         'neosloth': 'Long days and pleasant nights, neosloth.',
-        'Lobster': 'I obey, Spice Sommelier Lobster',
-        'IustitiaRex': ':smugstatue:'
+        'Lobster': 'I obey, Spice Sommelier Lobster'
 }
 
 # ---------------------------
