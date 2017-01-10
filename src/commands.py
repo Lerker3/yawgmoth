@@ -43,7 +43,9 @@ obey_dict = {
         'captainriku': 'I obey, Jund Lord Riku.',
         'Mori': ':sheep: baaa',
         'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
-        'neosloth': 'Long days and pleasant nights, neosloth.'
+        'neosloth': 'Long days and pleasant nights, neosloth.',
+        'Lobster': 'I obey, Spice Sommelier Lobster',
+        'IustitiaRex': ':smugstatue:'
 }
 
 # ---------------------------
