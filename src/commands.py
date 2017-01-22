@@ -46,9 +46,9 @@ obey_dict = {
         'neosloth': 'Long days and pleasant nights, neosloth.',
         'Lobster': 'I obey, Spice Sommelier Lobster.',
 	'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
-	'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
+        'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
         'Trisantris': 'The real  Yawgmoth would not obey, but I am but a facsimile. So yes. I obey.',
-        'Garta': 'No'
+        'Garta': 'No.'
 }
 
 # ---------------------------
@@ -342,9 +342,9 @@ def cmd_price(message):
         if (response.ok):
             data = json.loads(response.content)
             if data["usd"]:
-                return "${0}".format(data['usd'])
+                return '${0}'.format(data['usd'])
             else:
-                return "Price not found"
+                return "Price not found."
 
     else:
         return 'You must divine a single entity first.'
