@@ -45,8 +45,9 @@ obey_dict = {
         'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
         'neosloth': 'Long days and pleasant nights, neosloth.',
         'Lobster': 'I obey, Spice Sommelier Lobster.',
-	'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
-        'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
+	      'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
+	      'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
+	      'Sleepy': 'No one likes you.',
         'Trisantris': 'The real  Yawgmoth would not obey, but I am but a facsimile. So yes. I obey.',
         'Garta': 'No.'
 }
