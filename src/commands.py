@@ -47,6 +47,7 @@ obey_dict = {
         'Lobster': 'I obey, Spice Sommelier Lobster.',
 	'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
 	'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.'
+	'Sleepy': 'No one likes you.'
 }
 
 # ---------------------------
