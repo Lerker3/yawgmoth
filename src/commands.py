@@ -337,7 +337,7 @@ def cmd_price(message):
     global last_card
     if last_card is not None:
         name = last_card['name'].encode('utf-8')
-        url = 'https://api.scryfall.com/cards/named?exact={0}'.format(name)
+        url = 'https://api.scryfall.com/cards/named?exact={0}'
         response = requests.get(url.format(name).replace(' ', '+'))
         if (response.ok):
             data = json.loads(response.content)
@@ -345,6 +345,8 @@ def cmd_price(message):
                 return '${0}'.format(data['usd'])
             else:
                 return "Price not found."
+        else:
+            return 'Price not found.'
 
     else:
         return 'You must divine a single entity first.'
