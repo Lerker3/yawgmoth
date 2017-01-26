@@ -16,7 +16,7 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.10.5'
+version_number = 'v0.11.0'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
@@ -45,9 +45,9 @@ obey_dict = {
         'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
         'neosloth': 'Long days and pleasant nights, neosloth.',
         'Lobster': 'I obey, Spice Sommelier Lobster.',
-	      'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
-	      'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
-	      'Sleepy': 'No one likes you.',
+        'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
+        'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
+        'Sleepy': 'No one likes you.',
         'Trisantris': 'The real  Yawgmoth would not obey, but I am but a facsimile. So yes. I obey.',
         'Garta': 'No.'
 }
@@ -343,7 +343,7 @@ def cmd_price(message):
         if (response.ok):
             data = json.loads(response.content)
             if data["usd"]:
-                return '${0}'.format(data['usd'])
+                return '${0}'.format(data['usd']) + ' -- ' + name
             else:
                 return 'Price not found.'
         else:
