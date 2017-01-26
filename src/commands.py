@@ -344,7 +344,7 @@ def cmd_price(message):
             if data["usd"]:
                 return '${0}'.format(data['usd'])
             else:
-                return "Price not found."
+                return 'Price not found.'
         else:
             return 'Price not found.'
 
