@@ -51,7 +51,8 @@ obey_dict = {
         'Sleepy': 'No one likes you.',
         'Trisantris': 'The real  Yawgmoth would not obey, but I am but a facsimile. So yes. I obey.',
         'Garta': 'No.',
-        'Wedge': 'I obey... wait, are you Wedge from the mana source:tm:?'
+        'Wedge': 'I obey... wait, are you Wedge from the mana source:tm:?',
+        'Tatters': 'I won\'t obey, because people still refuse to pronounce Ghave as Gah-Vay... Sometimes Wizards is wrong. That \'H\' is there for a reason!'
 }
 
 # ---------------------------
@@ -90,7 +91,7 @@ def cmd_fetch(message):
         # Get the details and rulings of the exact card, as they are skipped when mtg cli returns multiple
         done = False
         for card in card_list:
-            if (card['name'].encode('utf-8').lower() == query.lower()):     # If name matches query
+            if (card['name'].lower() == query.lower()):     # If name matches query
                 DFC=False                                                   # Assume it's not a DFC
                 if len(card_list) == 2:                                     # If exactly 2 cards are found
                     if 'card_number' in card:                               # If the Card HAS a card number
@@ -265,7 +266,7 @@ def cmd_reset(message):
         return "Can't let you do that, StarFox"
 
 # ---------------------------
-# Command: Reset
+# Command: Shutdown
 # ---------------------------
 def cmd_shutdown(message):
     global reset_users
