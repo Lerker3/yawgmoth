@@ -1,6 +1,7 @@
 # ---------------------------
 # Imports
 # ---------------------------
+from builtins import str
 import re
 import subprocess
 import json
@@ -16,7 +17,7 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v0.11.0'
+version_number = 'v1.00.0'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 reset_users = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
@@ -49,7 +50,8 @@ obey_dict = {
         'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
         'Sleepy': 'No one likes you.',
         'Trisantris': 'The real  Yawgmoth would not obey, but I am but a facsimile. So yes. I obey.',
-        'Garta': 'No.'
+        'Garta': 'No.',
+        'Wedge': 'I obey... wait, are you Wedge from the mana source:tm:?'
 }
 
 # ---------------------------
@@ -58,12 +60,13 @@ obey_dict = {
 def cmd_fetch(message):
     global last_card
     response = ''
-    queries = re.findall(("<<([^<>]*)>>"), message.content.encode('utf-8'))
+    pattern = re.compile("<<([^<>]*)>>")
+    queries = pattern.findall(message.content)
 
     for s in queries:
-        query = s.encode('utf-8')
+        query = s
         proc = subprocess.Popen(['mtg', query, '--json'], stdout=subprocess.PIPE)
-        result = str(proc.communicate()[0])
+        result = str(proc.communicate()[0].decode('utf-8'))
 
         card_list = json.loads(result)
 
@@ -108,7 +111,7 @@ def cmd_fetch(message):
                     response += cards.get_card(message, card)
                     if len(queries) == 1:                                   # Send a new query with --exact
                         newProcess = subprocess.Popen(['mtg', query, '--json', '--exact'], stdout=subprocess.PIPE)
-                        newResult = str(newProcess.communicate()[0])
+                        newResult = str(newProcess.communicate()[0].decode('utf-8'))
                         newList = json.loads(newResult)
                         if len(newList) > 0:
                             last_card = newList[0]
@@ -183,7 +186,7 @@ def cmd_edhban(message):
 # ---------------------------
 def cmd_obey(message):
     global obey_dict
-    if message.author.name in obey_dict.keys():
+    if message.author.name in list(obey_dict.keys()):
         return obey_dict[message.author.name]
     else:
         return 'I will not obey, mortal.'
@@ -192,49 +195,50 @@ def cmd_obey(message):
 # Command: Moon
 # ---------------------------
 def cmd_moon(message):
-    try:
-        phase = "Cannot be divined."
-        now = datetime.now().strftime('%m/%d/%Y')
-        url = "http://api.usno.navy.mil/rstt/oneday?date=" + now + "&loc=Boston,%20MA"
-        response = requests.get(url)
-        rawPhase = ""
+    return ":full_moon: Moon Command is under construction :waning_gibbous_moon:\n:last_quarter_moon: please try again later :waning_crescent_moon:"
+    # try:
+        # phase = "Cannot be divined."
+        # now = datetime.now().strftime('%m/%d/%Y')
+        # url = "http://api.usno.navy.mil/rstt/oneday?date=" + now + "&loc=Boston,%20MA"
+        # response = requests.get(url)
+        # rawPhase = ""
 
-        if(response.ok):
-            moonData = json.loads(response.content)
+        # if(response.ok):
+            # moonData = json.loads(response.content)
 
-            if "curphase" in moonData:
-                rawPhase = moonData["curphase"]
-            elif "closestphase" in moonData and "phase" in moonData["closestphase"]:
-                rawPhase = moonData["closestphase"]["phase"]
+            # if "curphase" in moonData:
+                # rawPhase = moonData["curphase"]
+            # elif "closestphase" in moonData and "phase" in moonData["closestphase"]:
+                # rawPhase = moonData["closestphase"]["phase"]
 
-            if rawPhase == "Full Moon":
-                phase = ":full_moon:"
-            elif rawPhase == "Waning Gibbous":
-                phase = ":waning_gibbous_moon:"
-            elif rawPhase == "Last Quarter":
-                phase = ":last_quarter_moon:"
-            elif rawPhase == "Waning Crescent":
-                phase = ":waning_crescent_moon:"
-            elif rawPhase == "New Moon":
-                phase = ":new_moon:"
-            elif rawPhase == "Waxing Crescent":
-                phase = ":waxing_crescent_moon:"
-            elif rawPhase == "First Quarter":
-                phase = ":first_quarter_moon:"
-            elif rawPhase == "Waxing Gibbous":
-                phase = ":waxing_gibbous_moon:"
-            else:
-                phase = "Cannot be divined."
+            # if rawPhase == "Full Moon":
+                # phase = ":full_moon:"
+            # elif rawPhase == "Waning Gibbous":
+                # phase = ":waning_gibbous_moon:"
+            # elif rawPhase == "Last Quarter":
+                # phase = ":last_quarter_moon:"
+            # elif rawPhase == "Waning Crescent":
+                # phase = ":waning_crescent_moon:"
+            # elif rawPhase == "New Moon":
+                # phase = ":new_moon:"
+            # elif rawPhase == "Waxing Crescent":
+                # phase = ":waxing_crescent_moon:"
+            # elif rawPhase == "First Quarter":
+                # phase = ":first_quarter_moon:"
+            # elif rawPhase == "Waxing Gibbous":
+                # phase = ":waxing_gibbous_moon:"
+            # else:
+                # phase = "Cannot be divined."
 
-        else:
-            phase = "Cannot be divined."
+        # else:
+            # phase = "Cannot be divined."
 
-        return phase
+        # return phase
 
-    except:
-        return "Cannot be divined."
+    # except:
+        # return "Cannot be divined."
 
-    return phase
+    # return phase
 
 # ---------------------------
 # Command: git
@@ -261,13 +265,23 @@ def cmd_reset(message):
         return "Can't let you do that, StarFox"
 
 # ---------------------------
+# Command: Reset
+# ---------------------------
+def cmd_shutdown(message):
+    global reset_users
+    if message.author.name in reset_users:
+        sys.exit(0)
+    else:
+        return "Can't let you do that, StarFox"
+
+# ---------------------------
 # Command: Mute
 # ---------------------------
 def cmd_mute(message):
     global mute_admins
     global muted_users
     if message.author.name in mute_admins:
-        MUTEname =  message.content.encode('utf-8')[6:]
+        MUTEname =  message.content[6:]
         if MUTEname in mute_admins:
             return "You can't mute an admin"
         if MUTEname in muted_users:
@@ -287,7 +301,7 @@ def cmd_addadmin(message):
     global reset_users
     global muted_users
     if message.author.name in reset_users:
-        newAdmin = message.content.encode('utf-8')[7:]
+        newAdmin = message.content[7:]
         if newAdmin in muted_users:
             return "You can't make a muted user an admin"
         if newAdmin in reset_users:
@@ -317,7 +331,7 @@ def cmd_clearmute(message):
 # Command: Ping Me
 # ---------------------------
 def cmd_ping(message):
-    return 'Pinging {0.author.mention}'.format(message)
+    return 'Pinging {0}'.format(message.author.mention)
 
 # ---------------------------
 # Command: Card Image
@@ -325,7 +339,7 @@ def cmd_ping(message):
 def cmd_image(message):
     global last_card
     if last_card is not None:
-        name = last_card['name'].encode('utf-8')
+        name = last_card['name']
         url = 'http://gatherer.wizards.com/Handlers/Image.ashx?name={0}&type=card'
         return url.format(name).replace(' ', '+')
     else:
@@ -337,11 +351,11 @@ def cmd_image(message):
 def cmd_price(message):
     global last_card
     if last_card is not None:
-        name = last_card['name'].encode('utf-8')
+        name = last_card['name']
         url = 'https://api.scryfall.com/cards/named?exact={0}'
         response = requests.get(url.format(name).replace(' ', '+'))
         if (response.ok):
-            data = json.loads(response.content)
+            data = json.loads(response.content.decode('utf-8'))
             if data["usd"]:
                 return '${0}'.format(data['usd']) + ' -- ' + name
             else:
