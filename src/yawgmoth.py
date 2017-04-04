@@ -1,33 +1,71 @@
 # ---------------------------
 # Imports
 # ---------------------------
+from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
 import discord
 import sys
+import subprocess
+import asyncio
 import commands
+
+# ---------------------------
+# Startup Server / Channel
+# ---------------------------
+DESTServ = "/r/CompetitiveEDH"
+DESTChan = "urborg"
 
 # ---------------------------
 # Initialization
 # ---------------------------
 yawgmoth = discord.Client()
-yawgmoth.login(sys.argv[1], sys.argv[2])
 
 # ---------------------------
 # Event: Ready
 # ---------------------------
 @yawgmoth.event
+@asyncio.coroutine
 def on_ready():
-    server = yawgmoth.servers[0]
-    channel = server.channels[0]
-    print 'User:' + '\t\t' + yawgmoth.user.name
-    print 'ID:' + '\t\t' + yawgmoth.user.id
-    print 'Server:' + '\t\t' + server.name + ", " + server.id
-    yawgmoth.send_message(channel, 'I rise...')
+
+    riseServer = ""
+    riseChannel= ""
+
+    print("Destination server for rising: " + DESTServ)
+    serverlist = list(yawgmoth.servers)
+    for server in serverlist:
+        print("Checking if {} is our destination".format(server))
+        if server.name.lower() == DESTServ.lower():
+            riseServer = server
+            print("Rise server located")
+    
+    if not riseServer:
+        print("No server found with name " + DESTServ)
+    else:
+        print("Destination channel for rising: " + DESTChan)
+        channellist = list(riseServer.channels)
+        for channel in channellist:
+            print("Checking if {} is our destination".format(channel))
+            if channel.name.lower() == DESTChan.lower():
+                riseChannel = channel
+                print("Rise channel located")
+    
+    print('User:' + '\t\t' + yawgmoth.user.name)
+    print('ID:' + '\t\t' + yawgmoth.user.id)
+    
+    if riseServer:
+        print('Server:' + '\t\t' + riseServer.name + ", " + riseServer.id)
+        if riseChannel:
+            print('Channel:' + '\t' + riseChannel.name)
+            yield from yawgmoth.send_message(riseChannel, 'I rise...')
 
 # ---------------------------
 # Event: Message
 # ---------------------------
 @yawgmoth.event
+@asyncio.coroutine
 def on_message(message):
+    response = ''
     response = commands.cmd_fetch(message)
     if message.content.startswith('!details'):
         response += commands.cmd_details(message)
@@ -69,15 +107,28 @@ def on_message(message):
         response += 'http://media.wizards.com/2016/docs/MagicCompRules_04082016.pdf'
     if message.content.startswith('!reset'):
         response += commands.cmd_reset(message)
+    if message.content.startswith('!shutdown'):
+        response += commands.cmd_shutdown(message)
     if message.content.startswith('!image'):
         response += commands.cmd_image(message)
     if message.content.startswith('!price'):
         response += commands.cmd_price(message)
 
     if message.author.name not in commands.muted_users:
-        yawgmoth.send_message(message.channel, response)
+        if response:
+            yield from yawgmoth.send_message(message.channel, response)
+
+
+
+# ---------------------------
+# Login
+# ---------------------------
+#yawgmoth.login(sys.argv[1], sys.argv[2])
+
 
 # ---------------------------
 # Startup
 # ---------------------------
-yawgmoth.run()
+with open ("/home/ec2-user/token.txt", "r") as myfile:
+    token=myfile.read()
+yawgmoth.run(token)

@@ -1,5 +1,4 @@
 #!/bin/sh
 
-pip2 install mtg
-pip2 install discord.py
-
+pip install mtg
+pip install discord.py
