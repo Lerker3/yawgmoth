@@ -28,7 +28,7 @@ How to use git with git bash:
  * Clone the directory into a local folder
     *  ` git clone https://github.com/alexgerst/yawgmoth.git `
  *  Before making ANY CHANGES to your local copy, first make a new branch!
-    *  ` git checkout -b BRANCH_NAME master `
+    *  ` git checkout -b BRANCH_NAME `
  *  Update your files / make your changes and commit them to your branch periodically. To do this:
     *  ` git add FILENAMES `
     *  ` git commit `
