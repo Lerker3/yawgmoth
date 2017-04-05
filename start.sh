@@ -3,7 +3,7 @@
 export PYTHONIOENCODING=utf-8
 
 while true; do
-    python3 src/yawgmoth.py
+    python3 ~/testGIT/yawgmoth/src/yawgmoth.py
     RETURNCODE=$?
     echo $RETURNCODE
     if [ $RETURNCODE -ne 2 ]; then

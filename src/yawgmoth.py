@@ -15,6 +15,7 @@ import commands
 # ---------------------------
 DESTServ = "/r/CompetitiveEDH"
 DESTChan = "urborg"
+TokenLocation = "/home/ec2-user/token.txt"
 
 # ---------------------------
 # Initialization
@@ -129,6 +130,6 @@ def on_message(message):
 # ---------------------------
 # Startup
 # ---------------------------
-with open ("/home/ec2-user/token.txt", "r") as myfile:
+with open (TokenLocation, "r") as myfile:
     token=myfile.read()
 yawgmoth.run(token)
