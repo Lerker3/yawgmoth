@@ -264,6 +264,16 @@ def cmd_reset(message):
         sys.exit(2)
     else:
         return "Can't let you do that, StarFox"
+        
+# ---------------------------
+# Command: Reboot (no git)
+# ---------------------------
+def cmd_reboot(message):
+    global reset_users
+    if message.author.name in reset_users:
+        sys.exit(3)
+    else:
+        return "Can't let you do that, StarFox"
 
 # ---------------------------
 # Command: Shutdown
