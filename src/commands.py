@@ -127,8 +127,12 @@ def cmd_fetch(message):
 
     return response
 
+    
+        ##############
+        # Card Specs #
+        ##############
 # ---------------------------
-# Command: Details
+# Command: Card Details
 # ---------------------------
 def cmd_details(message):
     global last_card
@@ -138,7 +142,7 @@ def cmd_details(message):
         return 'You must divine a single entity first.'
 
 # ---------------------------
-# Command: Rulings
+# Command: Card Rulings
 # ---------------------------
 def cmd_rulings(message):
     global last_card
@@ -146,7 +150,44 @@ def cmd_rulings(message):
         return cards.get_card_rulings(message, last_card)
     else:
         return 'You must divine a single entity first.'
+        
+# ---------------------------
+# Command: Card Image
+# ---------------------------
+def cmd_image(message):
+    global last_card
+    if last_card is not None:
+        name = last_card['name']
+        url = 'http://gatherer.wizards.com/Handlers/Image.ashx?name={0}&type=card'
+        return url.format(name).replace(' ', '+')
+    else:
+        return 'You must divine a single entity first.'
 
+# ---------------------------
+# Command: Card Price
+# ---------------------------
+def cmd_price(message):
+    global last_card
+    if last_card is not None:
+        name = last_card['name']
+        url = 'https://api.scryfall.com/cards/named?exact={0}'
+        response = requests.get(url.format(name).replace(' ', '+'))
+        if (response.ok):
+            data = json.loads(response.content.decode('utf-8'))
+            if data["usd"]:
+                return '${0}'.format(data['usd']) + ' -- ' + name
+            else:
+                return 'Price not found.'
+        else:
+            return 'Price not found.'
+
+    else:
+        return 'You must divine a single entity first.'
+
+        
+        ############
+        # Banlists #
+        ############
 # ---------------------------
 # Command: Standard Banlist
 # ---------------------------
@@ -177,6 +218,28 @@ def cmd_vintageban(message):
 def cmd_edhban(message):
     return banlists.edh_ban
 
+    
+        ###################
+        # Bot Information #
+        ###################
+# ---------------------------
+# Command: git
+# ---------------------------
+def cmd_git(message):
+    global git_repo
+    return 'You can find my source at: ' + git_repo
+
+# ---------------------------
+# Command: Version
+# ---------------------------
+def cmd_version(message):
+    global version_number
+    return version_number    
+
+    
+        ##############
+        # Just 4 Fun #
+        ##############
 # ---------------------------
 # Command: Obey
 # ---------------------------
@@ -237,49 +300,43 @@ def cmd_moon(message):
     # return phase
 
 # ---------------------------
-# Command: git
+# Command: Ping Me
 # ---------------------------
-def cmd_git(message):
-    global git_repo
-    return 'You can find my source at: ' + git_repo
+def cmd_ping(message):
+    return 'Pinging {0}'.format(message.author.mention)
 
 # ---------------------------
-# Command: Version
-# ---------------------------
-def cmd_version(message):
-    global version_number
-    return version_number
-
-# ---------------------------
-# Command: Reset
-# ---------------------------
-def cmd_reset(message):
-    global yawg_admin_roles
-    if message.author.top_role in yawg_admin_roles:
-        sys.exit(2)
+# Command: Shitposter
+# --------------------------- 
+def cmd_shitposter(yawg, message):
+    msg = ""
+    on_self = True
+    shitpostrole = discord.utils.get(message.server.roles, name='shitposter')
+    if shitpostrole:
+        for m in message.mentions:
+            on_self = False
+            if shitpostrole in m.roles:
+                yawg.remove_roles(m, shitpostrole)
+                msg+= '{0} is no longer a {1}\n'.format(m.mention, shitpostrole.name)
+            else:
+                yawg.add_roles(m, shitpostrole)
+                msg+= '{0} is now a registered {1}\n'.format(m.mention, shitpostrole.name)
+    
+        if on_self:
+            if shitpostrole in message.author.roles:
+                yawg.remove_roles(message.author, shitpostrole)
+                msg+= '{0} is no longer a {1}'.format(message.author.mention, shitpostrole.name)
+            else:
+                yawg.add_roles(message.author, shitpostrole)
+                msg+= '{0} is now a registered {1}'.format(message.author.mention, shitpostrole.name)
     else:
-        return STD_ACCESS_ERROR
-        
-# ---------------------------
-# Command: Reboot (no git)
-# ---------------------------
-def cmd_reboot(message):
-    global yawg_admin_roles
-    if message.author.top_role in yawg_admin_roles:
-        sys.exit(3)
-    else:
-        return STD_ACCESS_ERROR
+        msg+= "This server doesn't have a shitposting role :( Sorry..."
+    return msg
+    
 
-# ---------------------------
-# Command: Shutdown
-# ---------------------------
-def cmd_shutdown(message):
-    global yawg_admin_roles
-    if message.author.top_role in yawg_admin_roles:
-        sys.exit(0)
-    else:
-        return STD_ACCESS_ERROR
-
+        ################
+        # Mod Commands #
+        ################
 # ---------------------------
 # Command: Ignore
 # ---------------------------
@@ -334,46 +391,45 @@ def cmd_clearignore(message):
         return "List of all users who I ignore has been cleared"
     else:
         return STD_ACCESS_ERROR
-
+    
+    
+        ##################
+        # Admin Commands #
+        ##################
 # ---------------------------
-# Command: Ping Me
+# Command: Reset
 # ---------------------------
-def cmd_ping(message):
-    return 'Pinging {0}'.format(message.author.mention)
-
-# ---------------------------
-# Command: Card Image
-# ---------------------------
-def cmd_image(message):
-    global last_card
-    if last_card is not None:
-        name = last_card['name']
-        url = 'http://gatherer.wizards.com/Handlers/Image.ashx?name={0}&type=card'
-        return url.format(name).replace(' ', '+')
+def cmd_reset(message):
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
+        sys.exit(2)
     else:
-        return 'You must divine a single entity first.'
-
-# ---------------------------
-# Command: Card Price
-# ---------------------------
-def cmd_price(message):
-    global last_card
-    if last_card is not None:
-        name = last_card['name']
-        url = 'https://api.scryfall.com/cards/named?exact={0}'
-        response = requests.get(url.format(name).replace(' ', '+'))
-        if (response.ok):
-            data = json.loads(response.content.decode('utf-8'))
-            if data["usd"]:
-                return '${0}'.format(data['usd']) + ' -- ' + name
-            else:
-                return 'Price not found.'
-        else:
-            return 'Price not found.'
-
-    else:
-        return 'You must divine a single entity first.'
+        return STD_ACCESS_ERROR
         
+# ---------------------------
+# Command: Reboot (no git)
+# ---------------------------
+def cmd_reboot(message):
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
+        sys.exit(3)
+    else:
+        return STD_ACCESS_ERROR
+
+# ---------------------------
+# Command: Shutdown
+# ---------------------------
+def cmd_shutdown(message):
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
+        sys.exit(0)
+    else:
+        return STD_ACCESS_ERROR
+
+        
+        ####################
+        # Admin Just 4 Fun #
+        ####################
 # ---------------------------
 # Command: Yawg Play Game
 # ---------------------------        
@@ -381,51 +437,5 @@ def cmd_gametime(message):
     global yawg_admin_roles
     game_name = ""
     if message.author.top_role in yawg_admin_roles:
-        game_name = message.content[6:]
+        game_name = message.content[10:]
     return game_name
-
-# ---------------------------
-# Command: Shitposter
-# --------------------------- 
-def cmd_shitposter(yawg, message):
-    msg = ""
-    on_self = True
-    shitpostrole = discord.utils.get(message.server.roles, name='shitposter')
-    if shitpostrole:
-        for m in message.mentions:
-            on_self = False
-            if shitpostrole in m.roles:
-                yawg.remove_roles(m, shitpostrole)
-                msg+= '{0} is no longer a {1}\n'.format(m.mention, shitpostrole.name)
-            else:
-                yawg.add_roles(m, shitpostrole)
-                msg+= '{0} is now a registered {1}\n'.format(m.mention, shitpostrole.name)
-    
-        if on_self:
-            if shitpostrole in message.author.roles:
-                yawg.remove_roles(message.author, shitpostrole)
-                msg+= '{0} is no longer a {1}'.format(message.author.mention, shitpostrole.name)
-            else:
-                yawg.add_roles(message.author, shitpostrole)
-                msg+= '{0} is now a registered {1}'.format(message.author.mention, shitpostrole.name)
-    else:
-        msg+= "This server doesn't have a shitposting role :( Sorry..."
-    return msg
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
