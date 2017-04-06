@@ -8,6 +8,7 @@ import json
 import sys
 import cards
 import banlists
+import personalvars
 
 import requests
 from requests.auth import HTTPDigestAuth
@@ -17,44 +18,37 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v1.00.0'
+version_number = 'v1.1.0'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
-reset_users = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
-mute_admins = ['Gerst','aceuuuu','Lerker','Shaper', 'ShakeAndShimmy']
-muted_users = []
-obey_dict = {
-        'Shaper': 'I obey, Master Shaper.',
-        'aceuuu': 'I obey, Admiral Aceuuu~!',
-        'muCephei': 'I obey, muCephei.',
-        'Gerst': 'I obey, Artificer Gerst.',
-        'Lerker': 'I obey, Commodore 64 Lerker.',
-        'ShakeAndShimmy': 'I obey, Chancellor ShakeAndShimmy.',
-        'angelforge': 'I obey, Lord AngelForge.',
-        'JimWolfie': 'Suck my necrotic dick, Jim.',
-        'Skuloth': 'Zur is for scrubs, I refuse to obey.',
-        'Noon2Dusk': 'I obey, Inventor Noon.',
-        'razzliox': 'I obey, Razzberries.',
-        'ifarmpandas': 'Beep boop, pandas are the best.',
-        'Rien': 'I obey, kiddo.',
-        'K-Ni-Fe': 'I obey, because I\'m 40% Potassium, Nickel and Iron.',
-        'BigLupu': 'Rim my necrotic yawghole, Lupu.',
-        'PGleo86': 'shh bby is ok.',
-        'tenrose': 'I won\'t obey, but that\'s not because you\'re a bad person. I just like to be free, as do you. You have a great day :)',
-        'captainriku': 'I obey, Jund Lord Riku.',
-        'Mori': ':sheep: baaa',
-        'infiniteimoc': 'I obey, Imoc, Herald of the Sun.',
-        'neosloth': 'Long days and pleasant nights, neosloth.',
-        'Lobster': 'I obey, Spice Sommelier Lobster.',
-        'Noahgs': 'I bow to thee, Master of Cows, Noahgs.',
-        'Tides': 'Let me... TORTURE YOUR EXISTENCE!!!!..... sorry that was bad.',
-        'Sleepy': 'No one likes you.',
-        'Trisantris': 'The real  Yawgmoth would not obey, but I am but a facsimile. So yes. I obey.',
-        'Garta': 'No.',
-        'Wedge': 'I obey... wait, are you Wedge from the mana source:tm:?',
-        'Tatters': 'I won\'t obey, because people still refuse to pronounce Ghave as Gah-Vay... Sometimes Wizards is wrong. That \'H\' is there for a reason!',
-        'Chemtails': 'I Obey, Chemtails, Don\'t hit me again please'
-}
+yawg_admin_roles = personalvars.admin_roles()
+if not yawg_mods:
+    yawg_mods = []
+ignored_users = []
+obey_dict = personalvars.obey_dict()
+STD_ACCESS_ERROR = personalvars.access_error()
+
+def setup_mods(server):
+    msg=""
+    if not yawg_mods:
+        yawg_mods = []
+    modroles = personalvars.mod_roles()
+    modusers = personalvars.mod_users()
+    for m in server.members:
+        if m.top_role in modroles:
+            yawg_mods.append(m)
+    for username in modusers:
+        m = discord.utils.get(server.members, name=username)
+        if m:
+            yawg_mods.append(m)
+    if yawg_mods:
+        msg+= 'Mods successfully found:\n'
+        for mod in yawg_mods:
+            msg+= '{} '.format(mod.name)
+    else:
+        msg+= 'No mods found for server {}'.format(server.name)
+        
+    return msg
 
 # ---------------------------
 # Command: Fetch
@@ -260,84 +254,86 @@ def cmd_version(message):
 # Command: Reset
 # ---------------------------
 def cmd_reset(message):
-    global reset_users
-    if message.author.name in reset_users:
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
         sys.exit(2)
     else:
-        return "Can't let you do that, StarFox"
+        return STD_ACCESS_ERROR
         
 # ---------------------------
 # Command: Reboot (no git)
 # ---------------------------
 def cmd_reboot(message):
-    global reset_users
-    if message.author.name in reset_users:
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
         sys.exit(3)
     else:
-        return "Can't let you do that, StarFox"
+        return STD_ACCESS_ERROR
 
 # ---------------------------
 # Command: Shutdown
 # ---------------------------
 def cmd_shutdown(message):
-    global reset_users
-    if message.author.name in reset_users:
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
         sys.exit(0)
     else:
-        return "Can't let you do that, StarFox"
+        return STD_ACCESS_ERROR
 
 # ---------------------------
-# Command: Mute
+# Command: Ignore
 # ---------------------------
-def cmd_mute(message):
-    global mute_admins
-    global muted_users
-    if message.author.name in mute_admins:
-        MUTEname =  message.content[6:]
-        if MUTEname in mute_admins:
-            return "You can't mute an admin"
-        if MUTEname in muted_users:
-            muted_users.remove(MUTEname)
-            return MUTEname + " has been unmuted"
-        else:
-            muted_users.append(MUTEname)
-            return MUTEname + " has been muted"
+def cmd_ignore(message):
+    global yawg_mods
+    global ignored_users
+    if message.author in yawg_mods:
+        for newIgnore in message.mentions:
+            if newIgnore.top_role in yawg_admin_roles:
+                return "You can't make me ignore an admin!"
+            if newIgnore in yawg_mods:
+                return "You can't make me ignore a yawgmod!"
+            if newIgnore in ignored_users:
+                ignored_users.remove(newIgnore)
+                return newIgnore.mention + " is now being ignored"
+            else:
+                ignored_users.append(newIgnore)
+                return newIgnore.mention + " is no longer being ignored"
     else:
-        return "Can't let you do that, StarFox"
+        return STD_ACCESS_ERROR
 
 # ---------------------------
-# Command: Add Mute Admin
+# Command: Change Mod Status
 # ---------------------------
-def cmd_addadmin(message):
-    global mute_admins
-    global reset_users
-    global muted_users
-    if message.author.name in reset_users:
-        newAdmin = message.content[7:]
-        if newAdmin in muted_users:
-            return "You can't make a muted user an admin"
-        if newAdmin in reset_users:
-            return "You can't change the admin status of an owner"
-        if newAdmin in mute_admins:
-            mute_admins.remove(newAdmin)
-            return newAdmin + " can no longer mute others"
-        else:
-            mute_admins.append(newAdmin)
-            return newAdmin + " can now mute others"
+def cmd_yawgmod(message):
+    global yawg_mods
+    global ignored_users
+    global yawg_admin_roles
+    if message.author.top_role in yawg_admin_roles:
+        for newMod in message.mentions:
+            if newMod in ignored_users:
+                return "You can't make an ignored user a mod"
+            if newMod.top_role in yawg_admin_roles:
+                return "You can't change the mod status of an admin"
+            if newMod in yawg_mods:
+                yawg_mods.remove(newMod)
+                return newMod.mention + " is no longer a yawgmod"
+            else:
+                yawg_mods.append(newMod)
+                return newMod.mention + " is now a yawgmod"
     else:
-        return "Can't let you do that, StarFox"
+        return STD_ACCESS_ERROR
 
 # ---------------------------
-# Command: Clear Mute List
+# Command: Clear Ignore List
 # ---------------------------
-def cmd_clearmute(message):
-    global mute_admins
-    global muted_users
-    if message.author.name in mute_admins:
-        muted_users = []
-        return "All muted users have been unmuted"
+def cmd_clearignore(message):
+    global yawg_mods
+    global ignored_users
+    if message.author in yawg_mods:
+        ignored_users = []
+        return "List of all users who I ignore has been cleared"
     else:
-        return "Can't let you do that, StarFox"
+        return STD_ACCESS_ERROR
 
 # ---------------------------
 # Command: Ping Me
@@ -377,3 +373,59 @@ def cmd_price(message):
 
     else:
         return 'You must divine a single entity first.'
+        
+# ---------------------------
+# Command: Yawg Play Game
+# ---------------------------        
+def cmd_gametime(message):
+    global yawg_admin_roles
+    game_name = ""
+    if message.author.top_role in yawg_admin_roles:
+        game_name = message.content[6:]
+    return game_name
+
+# ---------------------------
+# Command: Shitposter
+# --------------------------- 
+def cmd_shitposter(yawg, message):
+    msg = ""
+    on_self = True
+    shitpostrole = discord.utils.get(message.server.roles, name='shitposter')
+    if shitpostrole:
+        for m in message.mentions:
+            on_self = False
+            if shitpostrole in m.roles:
+                yawg.remove_roles(m, shitpostrole)
+                msg+= '{0} is no longer a {1}\n'.format(m.mention, shitpostrole.name)
+            else:
+                yawg.add_roles(m, shitpostrole)
+                msg+= '{0} is now a registered {1}\n'.format(m.mention, shitpostrole.name)
+    
+        if on_self:
+            if shitpostrole in message.author.roles:
+                yawg.remove_roles(message.author, shitpostrole)
+                msg+= '{0} is no longer a {1}'.format(message.author.mention, shitpostrole.name)
+            else:
+                yawg.add_roles(message.author, shitpostrole)
+                msg+= '{0} is now a registered {1}'.format(message.author.mention, shitpostrole.name)
+    else:
+        msg+= "This server doesn't have a shitposting role :( Sorry..."
+    return msg
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
