@@ -337,10 +337,10 @@ def cmd_rolech(message, rolename):
         if on_self:
             if myrole in message.author.roles:
                 msg = '{0} is no longer a {1}'.format(message.author.mention, myrole.name)
-                return CMD = ['Remove', message.author, myrole, msg]
+                return ['Remove', message.author, myrole, msg]
             else:
                 msg = '{0} is now a registered {1}'.format(message.author.mention, myrole.name)
-                return CMD = ['Add', message.author, myrole, msg]
+                return ['Add', message.author, myrole, msg]
 
     return ['n/a', "This server doesn't have a {0} role :( Sorry...".format(myrole)]
     
@@ -368,10 +368,10 @@ def cmd_shitposter(message):
         if on_self:
             if shitpostrole in message.author.roles:
                 msg = '{0} is no longer a {1}'.format(message.author.mention, shitpostrole.name)
-                return CMD = ['Remove', message.author, shitpostrole, msg]
+                return ['Remove', message.author, shitpostrole, msg]
             else:
                 msg = '{0} is now a registered {1}'.format(message.author.mention, shitpostrole.name)
-                return CMD = ['Add', message.author, shitpostrole, msg]
+                return ['Add', message.author, shitpostrole, msg]
 
     return ['n/a', "This server doesn't have a cockatrice role :( Sorry..."]
 	
@@ -399,10 +399,10 @@ def cmd_cockatrice(message):
         if on_self:
             if cockatricerole in message.author.roles:
                 msg = '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)
-                return CMD = ['Remove', message.author, cockatricerole, msg]
+                return ['Remove', message.author, cockatricerole, msg]
             else:
                 msg = '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)
-                return CMD = ['Add', message.author, cockatricerole, msg]
+                return ['Add', message.author, cockatricerole, msg]
 
     return ['n/a', "This server doesn't have a cockatrice role :( Sorry..."]
     
