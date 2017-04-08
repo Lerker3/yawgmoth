@@ -29,6 +29,7 @@ STD_ACCESS_ERROR = personalvars.access_error()
 
 def setup_mods(server):
     msg=""
+	global yawg_mods
     if not yawg_mods:
         yawg_mods = []
     modroles = personalvars.mod_roles()
