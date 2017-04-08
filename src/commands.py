@@ -312,7 +312,7 @@ def cmd_ping(message):
 def cmd_shitposter(yawg, message):
     msg = ""
     on_self = True
-    shitpostrole = discord.utils.get(message.server.roles, name='shitposter')
+    shitpostrole = discord.utils.get(message.server.roles, name='Shitposter')
     if shitpostrole:
         for m in message.mentions:
             on_self = False
@@ -340,7 +340,7 @@ def cmd_shitposter(yawg, message):
 def cmd_cockatrice(yawg, message):
     msg = ""
     on_self = True
-    cockatricerole = discord.utils.get(message.server.roles, name='cockatrice')
+    cockatricerole = discord.utils.get(message.server.roles, name='Cockatrice')
     if cockatricerole:
         for m in message.mentions:
             on_self = False
