@@ -344,8 +344,9 @@ def cmd_shitposter(yawg, message):
 # ---------------------------
 # Command: Cockatrice
 # --------------------------- 
-def cmd_cockatrice(yawg, message):
-    msg = ""
+#def cmd_cockatrice(yawg, message):
+def cmd_cockatrice(message):
+    #msg = ""
     on_self = True
     cockatricerole = discord.utils.get(message.server.roles, name='Cockatrice')
     if cockatricerole:
@@ -353,22 +354,26 @@ def cmd_cockatrice(yawg, message):
         for m in message.mentions:
             on_self = False
             if cockatricerole in m.roles:
-                yawg.remove_roles(m, cockatriceroles)
-                msg+= '{0} is no longer a {1}\n'.format(m.mention, cockatricerole.name)
+                return CMD = ['Remove', m, cockatriceroles, '{0} is no longer a {1}\n'.format(m.mention, cockatricerole.name)]
+                #yawg.remove_roles(m, cockatriceroles)
+                #msg+= '{0} is no longer a {1}\n'.format(m.mention, cockatricerole.name)
             else:
-                yawg.add_roles(m, cockatriceroles)
-                msg+= '{0} is now a registered {1}\n'.format(m.mention, cockatricerole.name)
+                return CMD = ['Add', m, cockatriceroles, '{0} is now a registered {1}\n'.format(m.mention, cockatricerole.name)]
+                #yawg.add_roles(m, cockatriceroles)
+                #msg+= '{0} is now a registered {1}\n'.format(m.mention, cockatricerole.name)
     
         if on_self:
             if cockatricerole in message.author.roles:
-                yawg.remove_roles(message.author, cockatriceroles)
-                msg+= '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)
+                return CMD = ['Remove', message.author, cockatriceroles, '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)]
+                #yawg.remove_roles(message.author, cockatriceroles)
+                #msg+= '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)
             else:
-                yawg.add_roles(message.author, cockatriceroles)
-                msg+= '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)
-    else:
-        msg+= "This server doesn't have a cockatrice role :( Sorry..."
-    return msg
+                return CMD = ['Add', message.author, cockatriceroles, '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)]
+                #yawg.add_roles(message.author, cockatriceroles)
+                #msg+= '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)
+    #else:
+        #msg+= "This server doesn't have a cockatrice role :( Sorry..."
+    return ['n/a', "This server doesn't have a cockatrice role :( Sorry..."]
     
 
         ################

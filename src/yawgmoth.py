@@ -131,8 +131,17 @@ def on_message(message):
             response += commands.cmd_ping(message)
         if message.content.startswith('!shitposter'):
             response += commands.cmd_shitposter(yawgmoth, message)
+        
         if message.content.startswith('!cockatrice'):
-            response += commands.cmd_cockatrice(yawgmoth, message)
+            todo = commands.cmd_cockatrice(yawgmoth, message)
+            if todo[0] == 'n/a':
+                response += todo[1]
+            if todo[0] == 'Add':
+                yawgmoth.add_roles(todo[1], todo[2])
+                response += todo[3]
+            if todo[0] == 'Remove':
+                yawgmoth.remove_roles(todo[1], todo[2])
+                response += todo[3]            
             
         ################
         # Mod Commands #
