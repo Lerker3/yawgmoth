@@ -22,8 +22,7 @@ version_number = 'v1.1.0'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 yawg_admin_roles = personalvars.admin_roles()
-if not yawg_mods:
-    yawg_mods = []
+yawg_mods = []
 ignored_users = []
 obey_dict = personalvars.obey_dict()
 STD_ACCESS_ERROR = personalvars.access_error()
