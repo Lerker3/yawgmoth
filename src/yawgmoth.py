@@ -37,7 +37,6 @@ def on_ready():
     print("Destination server for rising: " + DESTServ)
     serverlist = list(yawgmoth.servers)
     for server in serverlist:
-        print("Checking if {} is our destination".format(server))
         if server.name.lower() == DESTServ.lower():
             riseServer = server
             print("Rise server located")
@@ -50,7 +49,6 @@ def on_ready():
         print("Destination channel for rising: " + DESTChan)
         channellist = list(riseServer.channels)
         for channel in channellist:
-            print("Checking if {} is our destination".format(channel))
             if channel.name.lower() == DESTChan.lower():
                 riseChannel = channel
                 print("Rise channel located")
@@ -129,6 +127,10 @@ def on_message(message):
             response += ':sheep:'
         if message.content.startswith('!pingme'):
             response += commands.cmd_ping(message)       
+            
+        #####################
+        # Role Change Block #
+        #####################
         if message.content.startswith('!cockatrice') or message.content.startswith('!shitposter'):
             todo = ['n/a', 'How did you even get to this place in the code?']
             if message.content.startswith('!cockatrice'):

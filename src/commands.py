@@ -344,68 +344,6 @@ def cmd_rolech(message, rolename):
 
     return ['n/a', "This server doesn't have a {0} role :( Sorry...".format(myrole)]
     
-# ---------------------------
-# Command: Shitposter
-# --------------------------- 
-def cmd_shitposter(message):
-    global yawg_mods
-    msg = ""
-    on_self = True
-    shitpostrole = discord.utils.get(message.server.roles, name='Shitposter')
-    if shitpostrole:
-        for m in message.mentions:
-            on_self = False
-            if message.author in yawg_mods:
-                if shitpostrole in m.roles:
-                    msg = '{0} is no longer a {1}\n'.format(m.mention, shitpostrole.name)
-                    return ['Remove', m, shitpostrole, msg]
-                else:
-                    msg = '{0} is now a registered {1}\n'.format(m.mention, shitpostrole.name)
-                    return ['Add', m, shitpostrole, msg]
-            else:
-                return ['n/a', STD_ACCESS_ERROR]
-    
-        if on_self:
-            if shitpostrole in message.author.roles:
-                msg = '{0} is no longer a {1}'.format(message.author.mention, shitpostrole.name)
-                return ['Remove', message.author, shitpostrole, msg]
-            else:
-                msg = '{0} is now a registered {1}'.format(message.author.mention, shitpostrole.name)
-                return ['Add', message.author, shitpostrole, msg]
-
-    return ['n/a', "This server doesn't have a cockatrice role :( Sorry..."]
-	
-# ---------------------------
-# Command: Cockatrice
-# --------------------------- 
-def cmd_cockatrice(message):
-    global yawg_mods
-    msg = ""
-    on_self = True
-    cockatricerole = discord.utils.get(message.server.roles, name='Cockatrice')
-    if cockatricerole:
-        for m in message.mentions:
-            on_self = False
-            if message.author in yawg_mods:
-                if cockatricerole in m.roles:
-                    msg = '{0} is no longer a {1}\n'.format(m.mention, cockatricerole.name)
-                    return ['Remove', m, cockatricerole, msg]
-                else:
-                    msg = '{0} is now a registered {1}\n'.format(m.mention, cockatricerole.name)
-                    return ['Add', m, cockatricerole, msg]
-            else:
-                return ['n/a', STD_ACCESS_ERROR]
-                
-        if on_self:
-            if cockatricerole in message.author.roles:
-                msg = '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)
-                return ['Remove', message.author, cockatricerole, msg]
-            else:
-                msg = '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)
-                return ['Add', message.author, cockatricerole, msg]
-
-    return ['n/a', "This server doesn't have a cockatrice role :( Sorry..."]
-    
 
         ################
         # Mod Commands #
