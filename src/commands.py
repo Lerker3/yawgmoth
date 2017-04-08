@@ -22,21 +22,22 @@ from datetime import datetime
 version_number = 'v1.1.0'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
-yawg_admin_roles = personalvars.admin_roles()
+yawg_admin_roles = []
 yawg_mods = []
 ignored_users = []
 obey_dict = personalvars.obey_dict()
 STD_ACCESS_ERROR = personalvars.access_error()
+modroles = personalvars.mod_roles()
+modusers = personalvars.mod_users()
+yawg_admin_roles_str = personalvars.admin_roles()
 
 def setup_mods(server):
     msg=""
     global yawg_mods
     if not yawg_mods:
         yawg_mods = []
-    modroles = personalvars.mod_roles()
-    modusers = personalvars.mod_users()
     for m in server.members:
-        if m.top_role in modroles:
+        if m.top_role.name in modroles:
             yawg_mods.append(m)
     for username in modusers:
         m = discord.utils.get(server.members, name=username)
@@ -45,10 +46,16 @@ def setup_mods(server):
     if yawg_mods:
         msg+= 'Mods successfully found:\n'
         for mod in yawg_mods:
-            msg+= '{} '.format(mod.name)
+            msg+= '{} \n'.format(mod.name)
     else:
         msg+= 'No mods found for server {}'.format(server.name)
         
+
+    for admin_role in yawg_admin_roles_str:
+        r = discord.utils.get(server.roles, name=admin_role)
+        if r:
+            yawg_admin_roles.append(r)
+
     return msg
 
 # ---------------------------
@@ -342,21 +349,22 @@ def cmd_cockatrice(yawg, message):
     on_self = True
     cockatricerole = discord.utils.get(message.server.roles, name='Cockatrice')
     if cockatricerole:
+        cockatriceroles = [cockatricerole]
         for m in message.mentions:
             on_self = False
             if cockatricerole in m.roles:
-                yawg.remove_roles(m, cockatricerole)
+                yawg.remove_roles(m, cockatriceroles)
                 msg+= '{0} is no longer a {1}\n'.format(m.mention, cockatricerole.name)
             else:
-                yawg.add_roles(m, cockatricerole)
+                yawg.add_roles(m, cockatriceroles)
                 msg+= '{0} is now a registered {1}\n'.format(m.mention, cockatricerole.name)
     
         if on_self:
             if cockatricerole in message.author.roles:
-                yawg.remove_roles(message.author, cockatricerole)
+                yawg.remove_roles(message.author, cockatriceroles)
                 msg+= '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)
             else:
-                yawg.add_roles(message.author, cockatricerole)
+                yawg.add_roles(message.author, cockatriceroles)
                 msg+= '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)
     else:
         msg+= "This server doesn't have a cockatrice role :( Sorry..."
@@ -373,6 +381,8 @@ def cmd_ignore(message):
     global yawg_mods
     global ignored_users
     if message.author in yawg_mods:
+        if not message.mentions:
+            return "Please tag the person you wish me to ignore"
         for newIgnore in message.mentions:
             if newIgnore.top_role in yawg_admin_roles:
                 return "You can't make me ignore an admin!"
@@ -380,12 +390,13 @@ def cmd_ignore(message):
                 return "You can't make me ignore a yawgmod!"
             if newIgnore in ignored_users:
                 ignored_users.remove(newIgnore)
-                return newIgnore.mention + " is now being ignored"
+                return newIgnore.mention + " is no longer being ignored"
             else:
                 ignored_users.append(newIgnore)
-                return newIgnore.mention + " is no longer being ignored"
+                return newIgnore.mention + " is now being ignored"
     else:
         return STD_ACCESS_ERROR
+    return "Not sure how you got to this part of the code... good job"
 
 # ---------------------------
 # Command: Change Mod Status

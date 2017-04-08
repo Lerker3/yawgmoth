@@ -45,7 +45,8 @@ def on_ready():
     if not riseServer:
         print("No server found with name " + DESTServ)
     else:
-        print("Setting up yawgmods...\n{}".format(commands.setup_mods(riseServer)))
+        modsetup = commands.setup_mods(riseServer)
+        print("Setting up yawgmods...\n{}".format(modsetup))
         print("Destination channel for rising: " + DESTChan)
         channellist = list(riseServer.channels)
         for channel in channellist:
