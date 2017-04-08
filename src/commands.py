@@ -9,6 +9,7 @@ import sys
 import cards
 import banlists
 import personalvars
+import discord
 
 import requests
 from requests.auth import HTTPDigestAuth
