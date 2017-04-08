@@ -332,6 +332,34 @@ def cmd_shitposter(yawg, message):
     else:
         msg+= "This server doesn't have a shitposting role :( Sorry..."
     return msg
+	
+# ---------------------------
+# Command: Cockatrice
+# --------------------------- 
+def cmd_cockatrice(yawg, message):
+    msg = ""
+    on_self = True
+    cockatricerole = discord.utils.get(message.server.roles, name='cockatrice')
+    if cockatricerole:
+        for m in message.mentions:
+            on_self = False
+            if cockatricerole in m.roles:
+                yawg.remove_roles(m, cockatricerole)
+                msg+= '{0} is no longer a {1}\n'.format(m.mention, cockatricerole.name)
+            else:
+                yawg.add_roles(m, cockatricerole)
+                msg+= '{0} is now a registered {1}\n'.format(m.mention, cockatricerole.name)
+    
+        if on_self:
+            if cockatricerole in message.author.roles:
+                yawg.remove_roles(message.author, cockatricerole)
+                msg+= '{0} is no longer a {1}'.format(message.author.mention, cockatricerole.name)
+            else:
+                yawg.add_roles(message.author, cockatricerole)
+                msg+= '{0} is now a registered {1}'.format(message.author.mention, cockatricerole.name)
+    else:
+        msg+= "This server doesn't have a cockatrice role :( Sorry..."
+    return msg
     
 
         ################

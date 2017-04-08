@@ -130,6 +130,8 @@ def on_message(message):
             response += commands.cmd_ping(message)
         if message.content.startswith('!shitposter'):
             response += commands.cmd_shitposter(yawgmoth, message)
+		if message.content.startswith('!cockatrice'):
+            response += commands.cmd_cockatrice(yawgmoth, message)
             
         ################
         # Mod Commands #
