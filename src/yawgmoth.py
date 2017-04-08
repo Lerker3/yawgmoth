@@ -128,12 +128,13 @@ def on_message(message):
         if message.content.startswith('!sheep'):
             response += ':sheep:'
         if message.content.startswith('!pingme'):
-            response += commands.cmd_ping(message)
-        if message.content.startswith('!shitposter'):
-            response += commands.cmd_shitposter(yawgmoth, message)
-        
-        if message.content.startswith('!cockatrice'):
-            todo = commands.cmd_cockatrice(yawgmoth, message)
+            response += commands.cmd_ping(message)       
+        if message.content.startswith('!cockatrice') or message.content.startswith('!shitposter'):
+            todo = ['n/a', commands.STD_ACCESS_ERROR]
+            if message.content.startswith('!cockatrice'):
+                todo = commands.cmd_cockatrice(message)
+            if message.content.startswith('!shitposter'):
+                todo = commands.cmd_shitposter(message)
             if todo[0] == 'n/a':
                 response += todo[1]
             if todo[0] == 'Add':
