@@ -19,7 +19,7 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v1.1.0'
+version_number = 'v1.1.1'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 yawg_admin_roles = []
