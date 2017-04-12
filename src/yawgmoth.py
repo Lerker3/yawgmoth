@@ -71,7 +71,7 @@ def on_message(message):
     response = ''
     if message.author not in commands.ignored_users:
         if message.author in commands.muted_users:
-            yawgmoth.delete_message(message)
+            yield from yawgmoth.delete_message(message)
         else:
             response = commands.cmd_fetch(message)
             
