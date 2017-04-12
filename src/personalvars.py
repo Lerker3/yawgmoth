@@ -33,7 +33,7 @@ def mod_roles():
 #You can also manually add users to this list
 def mod_users():
     userlist = [
-    'Chemtails'
+    
     # To add to this list remember to put a comma on the previous line, then write on this line and move this comment down
     ]
     return userlist   
