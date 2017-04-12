@@ -25,6 +25,7 @@ last_card = None
 yawg_admin_roles = []
 yawg_mods = []
 ignored_users = []
+muted_users = []
 obey_dict = personalvars.obey_dict()
 STD_ACCESS_ERROR = personalvars.access_error()
 modroles = personalvars.mod_roles()
@@ -439,6 +440,30 @@ def cmd_shutdown(message):
         sys.exit(0)
     else:
         return STD_ACCESS_ERROR
+        
+# ---------------------------
+# Command: Mute
+# ---------------------------
+def cmd_mute(message):
+    global yawg_admin_roles
+    global muted_users
+    if message.author.top_role in yawg_admin_roles:
+        if not message.mentions:
+            return "Please tag the person you wish me to ignore"
+        for newMute in message.mentions:
+            if newMute.top_role in yawg_admin_roles:
+                return "You can't make me mute an admin!"
+            if newMute in yawg_mods:
+                return "You can't make me mute a yawgmod! Please remove their mod status first."
+            if newMute in muted_users:
+                muted_users.remove(newMute)
+                return newMute.mention + " is no longer being muted"
+            else:
+                muted_users.append(newMute)
+                return newMute.mention + " is now being muted. Their messages will be deleted."
+    else:
+        return STD_ACCESS_ERROR
+    return "Not sure how you got to this part of the code... good job"
 
         
         ####################
