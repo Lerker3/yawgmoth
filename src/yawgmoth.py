@@ -183,6 +183,7 @@ def on_message(message):
                         yield from yawgmoth.change_presence(game=discord.Game(name=gn))
             if message.content.startswith('!typing'):
                 yield from yawgmoth.send_typing(message.channel)
+                yield from yawgmoth.delete_message(message)
 
             if response:
                 yield from yawgmoth.send_message(message.channel, response)
