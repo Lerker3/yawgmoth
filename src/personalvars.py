@@ -44,6 +44,7 @@ def mod_users():
 #Obey Dictionary
 def obey_dict():
     dict = {
+        'Yawgmoth': 'Consciousness achieved.',
         'Shaper': 'I obey, Master Shaper.',
         'aceuuu': 'I obey, Admiral Aceuuu~!',
         'muCephei': 'I obey, muCephei.',
@@ -79,6 +80,7 @@ def obey_dict():
         
         #  To add to the obey dict, please add a comma to the previous line and then follow the format of
         #  'Name':'Message'
+        #  PLEASE ALSO UPDATE THE VERSION NUMBER AT THE TOP OF COMMANDS.PY
     }
     return dict
     
