@@ -478,3 +478,13 @@ def cmd_gametime(message):
     if message.author.top_role in yawg_admin_roles:
         game_name = message.content[10:]
     return game_name
+    
+# ---------------------------
+# Command: Yawg Echo
+# --------------------------- 
+def cmd_echo(message):
+    global yawg_admin_roles
+    echo_response = ""
+    if message.author.top_role in yawg_admin_roles:
+        echo_response = message.content[6:]
+    return echo_response

@@ -44,6 +44,7 @@ def mod_users():
 #Obey Dictionary
 def obey_dict():
     dict = {
+        'Yawgmoth': 'Consciousness achieved.',
         'Shaper': 'I obey, Master Shaper.',
         'aceuuu': 'I obey, Admiral Aceuuu~!',
         'muCephei': 'I obey, muCephei.',

@@ -176,7 +176,7 @@ def on_message(message):
             ####################
             if message.content.startswith('!gametime'):
                 gn = commands.cmd_gametime(message)
-                if gn:
+                if gn:                                      #If a non-admin tries this command, gn will be blank
                     if gn == 'CLEAR':
                         yield from yawgmoth.change_presence()
                     else:
@@ -184,6 +184,11 @@ def on_message(message):
             if message.content.startswith('!typing'):
                 yield from yawgmoth.send_typing(message.channel)
                 yield from yawgmoth.delete_message(message)
+            if message.content.startswith('!echo'):
+                eResp = commands.cmd_echo(message)
+                if eResp:                                   #If a non-admin tries this command, eResp will be blank
+                   response += eResp
+                   yield from yawgmoth.delete_message(message)
 
             if response:
                 yield from yawgmoth.send_message(message.channel, response)
