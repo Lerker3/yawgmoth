@@ -19,7 +19,9 @@ from datetime import datetime
 # ---------------------------
 # Globals
 # ---------------------------
-version_number = 'v1.1.1'
+#For any major revisions please update the middle number and set the 3rd to 0.
+#For minor revisions and changes to personal vars (obey commands) please increment the third number (up to 99).
+version_number = 'v1.1.2'
 git_repo = 'https://github.com/alexgerst/yawgmoth'
 last_card = None
 yawg_admin_roles = []
