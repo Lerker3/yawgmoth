@@ -130,6 +130,9 @@ def on_message(message):
                 response += ':sheep:'
             if message.content.startswith('!pingme'):
                 response += commands.cmd_ping(message)       
+            if message.content.startswith('!temp'):
+                response += commands.cmd_temp(message)
+
                 
             #####################
             # Role Change Block #
