@@ -319,7 +319,7 @@ def cmd_ping(message):
 # ---------------------------
 # Command: Temp
 # ---------------------------
-def cmd_temp(message)
+def cmd_temp(message):
     msg = message.content.lower()
     temperr = "Please specify which temperature to convert from"
     if "c" in msg and "f" in msg:
