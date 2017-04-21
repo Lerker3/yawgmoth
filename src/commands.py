@@ -324,17 +324,17 @@ def cmd_temp(message):
     temperr = "Please specify which temperature to convert from"
     if "c" in msg and "f" in msg:
         return temperr
-    if "c" not in msg or "f" not in msg:
+    if "c" not in msg and "f" not in msg:
         return temperr
 
     temp = int(re.search(r'\d+', msg).group())
 
     if "c" in msg:
         tf = (temp * 1.8) + 32
-        return "{0}C is {1}F".format(temp, tf)
+        return "{0:.2f}C is {1:.2f}F".format(temp, tf)
     elif "f" in msg:
         tc = (temp - 32) / 1.8
-        return "{0}F is {1}C".format(temp, tc)
+        return "{0:.2f}F is {1:.2f}C".format(temp, tc)
     else:
         return "Invalid use of temp command"
 
