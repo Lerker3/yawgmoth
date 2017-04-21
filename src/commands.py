@@ -335,7 +335,7 @@ def cmd_temp(message):
     elif "f" in msg:
         tc = (temp - 32) / 1.8
         return "{0}F is {1}C".format(temp, tc)
-    else
+    else:
         return "Invalid use of temp command"
 
     return "Invalid use of temp command"
