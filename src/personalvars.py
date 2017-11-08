@@ -85,7 +85,7 @@ def obey_dict():
     return dict
     
 def mute_cmd_msg():
-    mute_msg = 'Silence, mortal. :zipper_mouth: You\'ve been muted in Competitive EDH for <time>; '
+    mute_msg = 'Silence, mortal. :zipper_mouth: You\'ve been muted in Competitive EDH; '
     mute_msg += 'take a moment to reflect and calm down and please be respectful when you return.'
     return mute_msg
     
