@@ -137,12 +137,14 @@ def on_message(message):
             #####################
             # Role Change Block #
             #####################
-            if message.content.startswith('!cockatrice') or message.content.startswith('!shitposter'):
+            if message.content.startswith('!cockatrice') or message.content.startswith('!shitposter') or message.content.startswith('!foodforthonk'):
                 todo = ['n/a', 'How did you even get to this place in the code?']
                 if message.content.startswith('!cockatrice'):
                     todo = commands.cmd_rolech(message, 'Cockatrice')
                 if message.content.startswith('!shitposter'):
                     todo = commands.cmd_rolech(message, 'Shitposter')
+                if message.content.startswith('!foodforthonk'):
+                    todo = commands.cmd_rolech(message, 'Member')
                 if todo[0] == 'n/a':
                     response += todo[1]
                 if todo[0] == 'Add':
@@ -172,7 +174,10 @@ def on_message(message):
             if message.content.startswith('!shutdown'):
                 response += commands.cmd_shutdown(message)
             if message.content.startswith('!mute'):
-                response += commands.cmd_mute(message)
+                mutecmd = commands.cmd_mute(message)
+                response += mutecmd
+                if mutecmd.mentions:
+                    yield from yawgmoth.send_message(mutecmd.mentions, personalvars.mute_cmd_msg())
 
             ####################
             # Admin Just 4 Fun #
