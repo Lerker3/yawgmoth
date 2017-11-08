@@ -24,7 +24,7 @@ def access_error():
 # ---------------------------    
 #Roles in this server who are admins to the bot
 def admin_roles():
-    return ['Head Moderator', 'Senior Moderator']       #Top ranking roles in your server
+    return ['Head Moderator', 'Senior Moderator', 'Chat Moderator']       #Top ranking roles in your server
     
 #Roles in this server who are moderators to the bot
 def mod_roles():
