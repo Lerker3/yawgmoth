@@ -21,8 +21,8 @@ from datetime import datetime
 # ---------------------------
 #For any major revisions please update the middle number and set the 3rd to 0.
 #For minor revisions and changes to personal vars (obey commands) please increment the third number (up to 99).
-version_number = 'v1.1.5'
-git_repo = 'https://github.com/alexgerst/yawgmoth'
+version_number = 'v1.3.0'
+git_repo = 'https://github.com/Lerker3/yawgmoth'
 last_card = None
 yawg_admin_roles = []
 yawg_mods = []
