@@ -178,7 +178,7 @@ def on_message(message):
                 mute_resp = commands.cmd_mute(message)
                 if mute_resp[0]:
                     response += mute_resp[1] + mute_resp[2]
-                    yield from yawgmoth.send_message(mute_resp[1], MUTE_MESSAGE_TEXT)
+                    #yield from yawgmoth.send_message(mute_resp[1], MUTE_MESSAGE_TEXT)
                 else:
                     response += mute_resp[1]
                 
