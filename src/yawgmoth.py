@@ -18,6 +18,7 @@ TokenLocation = personalvars.token_location()
 DESTServ = personalvars.rise_server()
 DESTChan = personalvars.rise_channel()
 riseMSG = personalvars.rise_message()
+MUTE_MESSAGE_TEXT = personalvars.mute_cmd_msg()
 
 # ---------------------------
 # Initialization
@@ -174,10 +175,13 @@ def on_message(message):
             if message.content.startswith('!shutdown'):
                 response += commands.cmd_shutdown(message)
             if message.content.startswith('!mute'):
-                mutecmd = commands.cmd_mute(message)
-                response += mutecmd
-                if mutecmd.mentions:
-                    yield from yawgmoth.send_message(mutecmd.mentions, personalvars.mute_cmd_msg())
+                mute_resp = commands.cmd_mute(message)
+                if mute_resp[0]:
+                    response += mute_resp[1] + mute_resp[2]
+                    yield from yawgmoth.send_message(mute_resp[1], MUTE_MESSAGE_TEXT)
+                else:
+                    response += mute_resp[1]
+                
 
             ####################
             # Admin Just 4 Fun #

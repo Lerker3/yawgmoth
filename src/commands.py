@@ -475,21 +475,21 @@ def cmd_mute(message):
     global muted_users
     if message.author.top_role in yawg_admin_roles:
         if not message.mentions:
-            return "Please tag the person you wish me to ignore"
+            return [0, "Please tag the person you wish me to ignore"]
         for newMute in message.mentions:
             if newMute.top_role in yawg_admin_roles:
-                return "You can't make me mute an admin!"
+                return [0, "You can't make me mute an admin!"]
             if newMute in yawg_mods:
-                return "You can't make me mute a yawgmod! Please remove their mod status first."
+                return [0, "You can't make me mute a yawgmod! Please remove their mod status first."]
             if newMute in muted_users:
                 muted_users.remove(newMute)
-                return newMute.mention + " is no longer being muted"
+                return [1, newMute.mention, " is no longer being muted"]
             else:
                 muted_users.append(newMute)
-                return newMute.mention + " is now being muted. Their messages will be deleted."
+                return [1, newMute.mention, " is now being muted. Their messages will be deleted."]
     else:
-        return STD_ACCESS_ERROR
-    return "Not sure how you got to this part of the code... good job"
+        return [0, STD_ACCESS_ERROR]
+    return [0, "Not sure how you got to this part of the code... good job"]
 
         
         ####################
