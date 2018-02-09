@@ -76,7 +76,8 @@ def obey_dict():
         'Tatters': 'I won\'t obey, because people still refuse to pronounce Ghave as Gah-Vay... Sometimes Wizards is wrong. That \'H\' is there for a reason!',
         'Chemtails': 'I Obey, Chemtails, Don\'t hit me again please',
         'Dandelion': '***NO***',
-        'Leptys': 'Have your 24 cards, Senior Elptys'
+        'Leptys': 'Have your 24 cards, Senior Elptys',
+        'Average Dragon': 'https://cdn.discordapp.com/attachments/121100604302032896/411306738717818890/maxresdefault.png'
         
         #  To add to the obey dict, please add a comma to the previous line and then follow the format of
         #  'Name':'Message'
