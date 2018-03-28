@@ -138,10 +138,18 @@ def on_message(message):
             #####################
             # Role Change Block #
             #####################
-            if message.content.startswith('!cockatrice') or message.content.startswith('!shitposter') or message.content.startswith('!foodforthonk'):
+            if message.content.startswith('!cockatrice') or \
+               message.content.startswith('!gauntlet') or \
+               message.content.startswith('!ranked') or \
+               message.content.startswith('!shitposter') or \
+               message.content.startswith('!foodforthonk'):
                 todo = ['n/a', 'How did you even get to this place in the code?']
                 if message.content.startswith('!cockatrice'):
                     todo = commands.cmd_rolech(message, 'Cockatrice')
+                if message.content.startswith('!gauntlet'):
+                    todo = commands.cmd_rolech(message, 'Gauntlet')
+                if message.content.startswith('!ranked'):
+                    todo = commands.cmd_rolech(message, 'Ranked')
                 if message.content.startswith('!shitposter'):
                     todo = commands.cmd_rolech(message, 'Shitposter')
                 if message.content.startswith('!foodforthonk'):
