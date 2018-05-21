@@ -146,7 +146,7 @@ def on_message(message):
                message.content.startswith('!foodforthonk'):
                 todo = ['n/a', 'How did you even get to this place in the code?']
                 if message.content.startswith('!lfg'):
-                    todo = commands.cmd_rolelfg(message, 'lfg')
+                    todo = commands.cmd_rolelfg(message)
                 if message.content.startswith('!cockatrice'):
                     todo = commands.cmd_rolech(message, 'Cockatrice')
                 if message.content.startswith('!gauntlet'):

@@ -340,6 +340,10 @@ def cmd_temp(message):
 
     return "Invalid use of temp command"
 
+    
+        ###############
+        # Role Change #
+        ###############
 # ---------------------------
 # Command: Role Change
 # --------------------------- 
@@ -374,7 +378,7 @@ def cmd_rolech(message, rolename):
 # ---------------------------
 # Command: Role Change (LFG)
 # --------------------------- 
-def cmd_rolelfg(message, rolename):
+def cmd_rolelfg(message):
     global yawg_mods
     msg = ""
     trice = discord.utils.get(message.server.roles, name='Cockatrice')
