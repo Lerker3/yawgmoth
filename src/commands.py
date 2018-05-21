@@ -21,7 +21,7 @@ from datetime import datetime
 # ---------------------------
 #For any major revisions please update the middle number and set the 3rd to 0.
 #For minor revisions and changes to personal vars (obey commands) please increment the third number (up to 99).
-version_number = 'v1.3.2'
+version_number = 'v1.4.0'
 git_repo = 'https://github.com/Lerker3/yawgmoth'
 last_card = None
 yawg_admin_roles = []
@@ -340,6 +340,10 @@ def cmd_temp(message):
 
     return "Invalid use of temp command"
 
+    
+        ###############
+        # Role Change #
+        ###############
 # ---------------------------
 # Command: Role Change
 # --------------------------- 
@@ -371,7 +375,27 @@ def cmd_rolech(message, rolename):
 
     return ['n/a', "This server doesn't have a {0} role :( Sorry...".format(myrole)]
     
-
+# ---------------------------
+# Command: Role Change (LFG)
+# --------------------------- 
+def cmd_rolelfg(message):
+    global yawg_mods
+    msg = ""
+    trice = discord.utils.get(message.server.roles, name='Cockatrice')
+    gauntlet = discord.utils.get(message.server.roles, name='Gauntlet')
+    ranked = discord.utils.get(message.server.roles, name='Ranked')
+    if trice and gauntlet and ranked:
+        role_list = [trice, gauntlet, ranked]
+        if any(x in message.author.roles for x in role_list):
+            msg = '{0} is no longer LFG'.format(message.author.mention)
+            return ['Remove', message.author, role_list, msg]
+        else:
+            msg = '{0} is now a registered {1}, {2} and {3}'.format(message.author.mention, role_list[0], role_list[1], role_list[2])
+            return ['Add', message.author, role_list, msg]
+            
+    return ['n/a', "This server doesn't have a one of those roles :( Sorry..."]
+    
+    
         ################
         # Mod Commands #
         ################
