@@ -388,10 +388,10 @@ def cmd_rolelfg(message):
         role_list = [trice, gauntlet, ranked]
         if any(x in message.author.roles for x in role_list):
             msg = '{0} is no longer LFG'.format(message.author.mention)
-            return ['Remove', message.author, role_list, msg]
+            return ['RemoveLfg', message.author, role_list, msg]
         else:
             msg = '{0} is now a registered {1}, {2} and {3}'.format(message.author.mention, role_list[0], role_list[1], role_list[2])
-            return ['Add', message.author, role_list, msg]
+            return ['AddLfg', message.author, role_list, msg]
             
     return ['n/a', "This server doesn't have a one of those roles :( Sorry..."]
     

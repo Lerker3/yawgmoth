@@ -160,11 +160,18 @@ def on_message(message):
                 if todo[0] == 'n/a':
                     response += todo[1]
                 if todo[0] == 'Add':
-                    yield from yawgmoth.add_roles(todo[1], *todo[2])
+                    yield from yawgmoth.add_roles(todo[1], todo[2])
                     response += todo[3]
                 if todo[0] == 'Remove':
+                    yield from yawgmoth.remove_roles(todo[1], todo[2])
+                    response += todo[3]
+                if todo[0] == 'AddLfg':
+                    yield from yawgmoth.add_roles(todo[1], *todo[2])
+                    response += todo[3]
+                if todo[0] == 'RemoveLfg':
                     yield from yawgmoth.remove_roles(todo[1], *todo[2])
-                    response += todo[3]            
+                    response += todo[3]
+            
                 
             ################
             # Mod Commands #
