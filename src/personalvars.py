@@ -77,7 +77,8 @@ def obey_dict():
         'Chemtails': 'I Obey, Chemtails, Don\'t hit me again please',
         'Dandelion': '***NO***',
         'Leptys': 'Have your 24 cards, Senior Elptys',
-        'Average Dragon': 'https://cdn.discordapp.com/attachments/121100604302032896/411306738717818890/maxresdefault.png'
+        'Average Dragon': 'https://cdn.discordapp.com/attachments/121100604302032896/411306738717818890/maxresdefault.png',
+        'Sickrobot': 'Eww, sure. Just don\'t give me a virus'
         
         #  To add to the obey dict, please add a comma to the previous line and then follow the format of
         #  'Name':'Message'
